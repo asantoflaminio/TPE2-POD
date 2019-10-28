@@ -1,0 +1,5 @@
+./query2.sh -Dn=5
+./query4.sh -Doaci=SAEZ -Dn=5
+./query5.sh -Dn=5
+./query6.sh -Dmin=1000
+
