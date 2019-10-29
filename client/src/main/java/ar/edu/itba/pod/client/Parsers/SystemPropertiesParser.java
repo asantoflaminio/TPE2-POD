@@ -9,6 +9,7 @@ public class SystemPropertiesParser {
     private Optional<String> n;
     private Optional<String> oaci;
     private Optional<String> min;
+    private int queryNumber;
 
     public SystemPropertiesParser() {
         this.addresses = System.getProperty("addresses");
@@ -17,6 +18,7 @@ public class SystemPropertiesParser {
         this.n = Optional.ofNullable(System.getProperty("n"));
         this.oaci = Optional.ofNullable(System.getProperty("oaci"));
         this.min = Optional.ofNullable(System.getProperty("min"));
+        this.queryNumber = Integer.parseInt(System.getProperty("queryNumber"));
     }
 
     public String getAddresses() {
@@ -41,5 +43,9 @@ public class SystemPropertiesParser {
 
     public Optional<String> getN() {
         return n;
+    }
+
+    public int getQueryNumber() {
+        return queryNumber;
     }
 }
