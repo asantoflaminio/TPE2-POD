@@ -27,6 +27,7 @@ public class Client {
         logger.info("The client is starting");
 
         SystemPropertiesParser sysinput = new SystemPropertiesParser();
+        logger.info("Query number: " + sysinput.getQueryNumber());
 
         List<Airport> airports = loadAirportCSV(sysinput);
         List<Movement> movements = loadMovementsCSV(sysinput);
