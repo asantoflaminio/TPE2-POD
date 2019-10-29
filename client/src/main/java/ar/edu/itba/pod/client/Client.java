@@ -58,7 +58,7 @@ public class Client {
 
         query = getQuery(querynumber, airports, movements, hz, sysinput.getOutPath());
 
-        logger.info("Starting map/reduce job for query numer " + querynumber);
+        logger.info("Starting map/reduce job for query number " + querynumber);
         query.runQuery();
 
         logger.info("Finished map/reduce job");
@@ -113,7 +113,7 @@ public class Client {
         clientNetworkConfig.addAddress(sysinput.getAddresses().split(";")); // ni idea si esto nada
         clientConfig.setNetworkConfig(clientNetworkConfig);
 
-        clientConfig.setGroupConfig(new GroupConfig("g2", "grupo2-1234"));
+        clientConfig.setGroupConfig(new GroupConfig("g2", "g2"));
 
         return clientConfig;
     }
