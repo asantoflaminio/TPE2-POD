@@ -7,7 +7,7 @@ import ar.edu.itba.pod.client.Parsers.MovementParser;
 import ar.edu.itba.pod.client.Parsers.Parser;
 import ar.edu.itba.pod.client.Parsers.SystemPropertiesParser;
 import ar.edu.itba.pod.client.Queries.Query;
-import ar.edu.itba.pod.client.Queries.Query1.Query1;
+//import ar.edu.itba.pod.client.Queries.Query1.Query1;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
 import org.slf4j.Logger;
@@ -24,12 +24,12 @@ public class Client {
         logger.info("The client is starting");
         List<Airport> airports = loadAirportCSV();
         List<Movement> movements = loadMovementsCSV();
-        Query query;
+        //Query query;
 
         HazelcastInstance hz = HazelcastClient.newHazelcastClient();
 
         //query = getQuery(airports, movements, hz);
-        query.runQuery();
+        //query.runQuery();
 
         hz.shutdown();
     }

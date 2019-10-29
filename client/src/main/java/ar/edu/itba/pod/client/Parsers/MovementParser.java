@@ -50,7 +50,7 @@ public class MovementParser implements Parser<Movement> {
 
     private FlightType getFlightType(String s) {
         if(s.equalsIgnoreCase("cabotaje")) {
-            return FlightType.LOCAL;
+            return FlightType.CABOTAGE;
         }
         if(s.equalsIgnoreCase("internacional")) {
             return FlightType.INTERNATIONAL;
@@ -60,7 +60,7 @@ public class MovementParser implements Parser<Movement> {
 
     private MovementType getMovementType(String s) {
         if(s.equalsIgnoreCase("despegue")) {
-            return MovementType.TAKE_OF;
+            return MovementType.TAKEOFF;
         }
 
         if(s.equalsIgnoreCase("aterrizaje")) {
