@@ -25,9 +25,12 @@ public class Client {
 
     public static void main(String[] args) throws InterruptedException, ExecutionException, IllegalQueryNumber {
         logger.info("The client is starting");
-        List<Airport> airports = loadAirportCSV();
-        List<Movement> movements = loadMovementsCSV();
+
         SystemPropertiesParser sysinput = new SystemPropertiesParser();
+
+        List<Airport> airports = loadAirportCSV(sysinput);
+        List<Movement> movements = loadMovementsCSV(sysinput);
+
         ClientConfig clientConfig = getConfig(sysinput);
 
         Query query;
@@ -43,19 +46,22 @@ public class Client {
         int querynumber = sysinput.getQueryNumber();
 
         query = getQuery(querynumber, airports, movements, hz);
+
+        logger.info("Starting map/reduce job for query numer " + querynumber);
         query.runQuery();
 
+        logger.info("Finished map/reduce job");
         hz.shutdown();
     }
 
-    private static List<Airport> loadAirportCSV() {
+    private static List<Airport> loadAirportCSV(SystemPropertiesParser sysinput) {
         Parser<Airport> ap = new AirportParser();
-        return ap.loadCSVFile(Paths.get("aeropuertos.csv"));
+        return ap.loadCSVFile(Paths.get(sysinput.getInPath().concat("aeropuertos.csv")));
     }
 
-    private static List<Movement> loadMovementsCSV() {
+    private static List<Movement> loadMovementsCSV(SystemPropertiesParser sysinput) {
         Parser<Movement> mp = new MovementParser();
-        return mp.loadCSVFile(Paths.get("movimientos.csv"));
+        return mp.loadCSVFile(Paths.get(sysinput.getInPath().concat("movimientos.csv")));
     }
 
     private static Query getQuery(int queryNumber, List<Airport> airports, List<Movement> movements, HazelcastInstance hz)
@@ -92,10 +98,10 @@ public class Client {
         ClientConfig clientConfig = new ClientConfig();
         ClientNetworkConfig clientNetworkConfig = new ClientNetworkConfig();
 
-        clientNetworkConfig.addAddress(sysinput.getAddresses());
+        clientNetworkConfig.addAddress(sysinput.getAddresses().split(";")); // ni idea si esto nada
         clientConfig.setNetworkConfig(clientNetworkConfig);
 
-        clientConfig.setGroupConfig(new GroupConfig("g2", "1234"));
+        clientConfig.setGroupConfig(new GroupConfig("g2", "grupo2-1234"));
 
         return clientConfig;
     }

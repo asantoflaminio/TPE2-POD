@@ -12,7 +12,7 @@ public class SystemPropertiesParser {
     private int queryNumber;
 
     public SystemPropertiesParser() {
-        this.addresses = System.getProperty("addresses");
+        this.addresses = System.getProperty("addresses", "127.0.0.1");
         this.outPath = System.getProperty("outPath");
         this.inPath = System.getProperty("inPath");
         this.n = Optional.ofNullable(System.getProperty("n"));
