@@ -67,7 +67,6 @@ public class Client {
 
     private static IList<Airport> loadAirportCSV(SystemPropertiesParser sysinput, IList<Airport> airportsIList) {
         Parser<Airport> ap = new AirportParser();
-   
         return ap.loadCSVFile(Paths.get(sysinput.getInPath().concat("aeropuertos.csv")), airportsIList);
     }
 
