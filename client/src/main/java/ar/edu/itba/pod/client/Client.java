@@ -13,6 +13,8 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
 import com.hazelcast.config.GroupConfig;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +31,8 @@ public class Client {
         SystemPropertiesParser sysinput = new SystemPropertiesParser();
         logger.info("Query number: " + sysinput.getQueryNumber());
 
-        List<Airport> airports = loadAirportCSV(sysinput);
-        List<Movement> movements = loadMovementsCSV(sysinput);
+        IList<Airport> airports = loadAirportCSV(sysinput);
+        IList<Movement> movements = loadMovementsCSV(sysinput);
 
         ClientConfig clientConfig = getConfig(sysinput);
 
@@ -46,7 +48,7 @@ public class Client {
 
         int querynumber = sysinput.getQueryNumber();
 
-        query = getQuery(querynumber, airports, movements, hz);
+        query = getQuery(querynumber, airports, movements, hz, sysinput.getOutPath());
 
         logger.info("Starting map/reduce job for query numer " + querynumber);
         query.runQuery();
@@ -55,23 +57,23 @@ public class Client {
         hz.shutdown();
     }
 
-    private static List<Airport> loadAirportCSV(SystemPropertiesParser sysinput) {
+    private static IList<Airport> loadAirportCSV(SystemPropertiesParser sysinput) {
         Parser<Airport> ap = new AirportParser();
         return ap.loadCSVFile(Paths.get(sysinput.getInPath().concat("aeropuertos.csv")));
     }
 
-    private static List<Movement> loadMovementsCSV(SystemPropertiesParser sysinput) {
+    private static IList<Movement> loadMovementsCSV(SystemPropertiesParser sysinput) {
         Parser<Movement> mp = new MovementParser();
         return mp.loadCSVFile(Paths.get(sysinput.getInPath().concat("movimientos.csv")));
     }
 
-    private static Query getQuery(int queryNumber, List<Airport> airports, List<Movement> movements, HazelcastInstance hz)
+    private static Query getQuery(int queryNumber, IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath)
             throws IllegalQueryNumber {
         Query query;
 
         switch (queryNumber) {
             case 1:
-                query = new Query1(airports, movements, hz);
+                query = new Query1(airports, movements, hz, outPath);
                 break;
             case 2:
                 query = new Query2(airports, movements, hz);
