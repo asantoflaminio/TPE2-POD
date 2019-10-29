@@ -11,11 +11,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.hazelcast.core.IList;
+
 public class MovementParser implements Parser<Movement> {
 
     @Override
-    public List<Movement> loadCSVFile(Path path) {
-        List<String> lines = null;
+    public IList<Movement> loadCSVFile(Path path, IList<Movement> ans) {
+        List<String> lines = null; 
 
         try {
              lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
@@ -24,14 +26,14 @@ public class MovementParser implements Parser<Movement> {
             e.printStackTrace();
         }
 
-        return parseAllLines(lines);
+        return parseAllLines(lines, ans);
     }
 
-    private List<Movement> parseAllLines(List<String> lines) {
-        List<Movement> movements = new ArrayList<>();
+    private IList<Movement> parseAllLines(List<String> lines, IList<Movement> ans) {
+        List<Movement> movements = new ArrayList<>(); 
 
         if (lines == null) {
-            return movements;
+            return ans;
         }
 
         lines.remove(0);
@@ -39,8 +41,9 @@ public class MovementParser implements Parser<Movement> {
         for (String line : lines) {
             movements.add(parseLine(line));
         }
+        ans.addAll(movements);
 
-        return movements;
+        return ans;
     }
 
     private Movement parseLine(String line) {

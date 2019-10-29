@@ -31,8 +31,8 @@ public class Client {
         SystemPropertiesParser sysinput = new SystemPropertiesParser();
         logger.info("Query number: " + sysinput.getQueryNumber());
 
-        IList<Airport> airports = loadAirportCSV(sysinput);
-        IList<Movement> movements = loadMovementsCSV(sysinput);
+        
+        
 
         ClientConfig clientConfig = getConfig(sysinput);
 
@@ -45,7 +45,15 @@ public class Client {
             System.out.println("Unable to connect to cluster");
             return;
         }
+        
+        
+        IList<Airport> airportsIList = hz.getList("airports");
+        IList<Movement> movementsIList = hz.getList("movements");
+        
+        IList<Airport> airports = loadAirportCSV(sysinput, airportsIList);
+        IList<Movement> movements = loadMovementsCSV(sysinput, movementsIList);
 
+        
         int querynumber = sysinput.getQueryNumber();
 
         query = getQuery(querynumber, airports, movements, hz, sysinput.getOutPath());
@@ -57,14 +65,15 @@ public class Client {
         hz.shutdown();
     }
 
-    private static IList<Airport> loadAirportCSV(SystemPropertiesParser sysinput) {
+    private static IList<Airport> loadAirportCSV(SystemPropertiesParser sysinput, IList<Airport> airportsIList) {
         Parser<Airport> ap = new AirportParser();
-        return ap.loadCSVFile(Paths.get(sysinput.getInPath().concat("aeropuertos.csv")));
+   
+        return ap.loadCSVFile(Paths.get(sysinput.getInPath().concat("aeropuertos.csv")), airportsIList);
     }
 
-    private static IList<Movement> loadMovementsCSV(SystemPropertiesParser sysinput) {
+    private static IList<Movement> loadMovementsCSV(SystemPropertiesParser sysinput, IList<Movement> movementsIList) {
         Parser<Movement> mp = new MovementParser();
-        return mp.loadCSVFile(Paths.get(sysinput.getInPath().concat("movimientos.csv")));
+        return mp.loadCSVFile(Paths.get(sysinput.getInPath().concat("movimientos.csv")), movementsIList);
     }
 
     private static Query getQuery(int queryNumber, IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath)

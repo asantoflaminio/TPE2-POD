@@ -22,8 +22,8 @@ public class FileManager {
         if (bw != null) try {
             bw.flush();
             bw.close();
-        } catch (IOException ioe2) {
-            // just ignore it
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
     }
 
