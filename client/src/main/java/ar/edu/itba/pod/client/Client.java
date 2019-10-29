@@ -2,11 +2,11 @@ package ar.edu.itba.pod.client;
 
 import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
-import ar.edu.itba.pod.client.Parsers.AirportParser;
-import ar.edu.itba.pod.client.Parsers.MovementParser;
-import ar.edu.itba.pod.client.Parsers.Parser;
-import ar.edu.itba.pod.client.Parsers.SystemPropertiesParser;
-import ar.edu.itba.pod.client.Queries.*;
+import ar.edu.itba.pod.client.parsers.AirportParser;
+import ar.edu.itba.pod.client.parsers.MovementParser;
+import ar.edu.itba.pod.client.parsers.Parser;
+import ar.edu.itba.pod.client.parsers.SystemPropertiesParser;
+import ar.edu.itba.pod.client.queries.*;
 import ar.edu.itba.pod.exceptions.IllegalQueryNumber;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;

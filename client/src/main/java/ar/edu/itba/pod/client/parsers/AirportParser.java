@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.client.Parsers;
+package ar.edu.itba.pod.client.parsers;
 
 import ar.edu.itba.pod.Airport;
 

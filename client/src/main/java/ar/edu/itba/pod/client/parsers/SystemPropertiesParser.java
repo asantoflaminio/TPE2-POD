@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.client.Parsers;
+package ar.edu.itba.pod.client.parsers;
 
 import java.util.Optional;
 

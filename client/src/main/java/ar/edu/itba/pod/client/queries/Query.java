@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.client.Queries;
+package ar.edu.itba.pod.client.queries;
 
 import java.util.concurrent.ExecutionException;
 

@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.client.Queries;
+package ar.edu.itba.pod.client.queries;
 
 import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
