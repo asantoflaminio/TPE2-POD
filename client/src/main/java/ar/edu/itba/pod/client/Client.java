@@ -5,6 +5,7 @@ import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.client.Parsers.AirportParser;
 import ar.edu.itba.pod.client.Parsers.MovementParser;
 import ar.edu.itba.pod.client.Parsers.Parser;
+import ar.edu.itba.pod.client.Parsers.SystemPropertiesParser;
 import ar.edu.itba.pod.client.Queries.Query;
 import ar.edu.itba.pod.client.Queries.Query1.Query1;
 import com.hazelcast.client.HazelcastClient;
@@ -27,7 +28,7 @@ public class Client {
 
         HazelcastInstance hz = HazelcastClient.newHazelcastClient();
 
-        query = new Query1(airports, movements, hz);
+        //query = getQuery(airports, movements, hz);
         query.runQuery();
 
         hz.shutdown();
@@ -42,6 +43,5 @@ public class Client {
         Parser<Movement> mp = new MovementParser();
         return mp.loadCSVFile(Paths.get("movimientos.csv"));
     }
-
 
 }
