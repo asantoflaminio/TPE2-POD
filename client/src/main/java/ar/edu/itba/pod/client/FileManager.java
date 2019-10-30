@@ -12,6 +12,7 @@ public class FileManager {
     public FileManager(String name) {
 
         try {
+        	bw = new BufferedWriter(new FileWriter(name, false));
             bw = new BufferedWriter(new FileWriter(name, true));
         } catch (IOException e) {
             e.printStackTrace();
