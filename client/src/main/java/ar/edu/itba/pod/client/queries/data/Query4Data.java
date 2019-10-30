@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.client.queries.aux;
+package ar.edu.itba.pod.client.queries.data;
 
 public class Query4Data implements Comparable<Query4Data> {
 	
