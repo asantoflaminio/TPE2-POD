@@ -44,7 +44,7 @@ public class AirportParser implements Parser<Airport> {
 
     private Airport parseLine(String line) {
         String[] column = line.split(";");
-        return new Airport(optionalFromStr(column[1]), optionalFromStr(column[2]), removeQuotes(column[4]), column[21]);
+        return new Airport(optionalFromStr(column[1]), removeQuotes(column[4]), column[21]);
     }
 
     private String optionalFromStr(String s) {

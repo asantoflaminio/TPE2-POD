@@ -48,24 +48,27 @@ public class Query1 implements Query {
 
         /* Datos que obtenemos de la reduccion */
         Map<String, Integer> movementsPerAirport = cf.get();
-        
+        System.out.println("movementsPerAiprot keyset es : " + movementsPerAirport.size());
         
         List<Query1Data> answer = new ArrayList<>();
 
         Map<String, String> mapOaci = new HashMap<>();
-
+        System.out.println("airports " + airports.size());
         for(Airport airport : airports) {
-        	 mapOaci.put(airport.getOaciCode(),airport.getName());
+        	mapOaci.put(airport.getOaciCode(),airport.getName());
         }
-
+        System.out.println("mapOaci es " + mapOaci.size());
 
         /* Generate output joining oaci with name */
         for(String oaciCode : movementsPerAirport.keySet()) {
             String name = mapOaci.get(oaciCode);
             if(name != null) {
+            	//System.out.println("agrego");
             	answer.add(new Query1Data(name, oaciCode, movementsPerAirport.get(oaciCode)));
             }
         }
+        
+        System.out.println("antes del sort DATOS SON: " + answer.size());
 
         /* Orden descendente y alfabetico */
         answer.sort((Query1Data a, Query1Data b) -> {
@@ -80,7 +83,9 @@ public class Query1 implements Query {
         // header
         fm.appendToFile("OACI;Denominación;Movimientos\n");
         // data
+        System.out.println("DATOS SON: " + answer.size());
         for(Query1Data data : answer) {
+        	System.out.println(data);
             fm.appendToFile(data +"\r\n");
         }
 

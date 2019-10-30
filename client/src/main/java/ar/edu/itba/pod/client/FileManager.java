@@ -28,8 +28,9 @@ public class FileManager {
     }
 
 
-    public void appendToFile( String data) {
+    public void appendToFile(String data) {
         try {
+        	
             bw.write(data);
         } catch (IOException ioe) {
             ioe.printStackTrace();

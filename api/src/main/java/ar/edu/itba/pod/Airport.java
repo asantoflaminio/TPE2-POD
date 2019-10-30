@@ -7,7 +7,7 @@ public class Airport implements Serializable {
     private final String name;
     private final String state;
 
-    public Airport(String code, String oaciCode, String name, String state) {
+    public Airport(String oaciCode, String name, String state) {
         this.oaciCode = oaciCode;
         this.name = name;
         this.state = state;
