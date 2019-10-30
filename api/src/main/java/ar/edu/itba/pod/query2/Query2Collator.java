@@ -14,7 +14,7 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
 
     @Override
     public List<Map.Entry<String, Double>> collate(Iterable<Map.Entry<String, Long>> values) {
-        List<Map.Entry<String, Double>> topNAnswer = new ArrayList<>();
+        List<Map.Entry<String, Double>> topNAnswer;
         List<Map.Entry<String, Double>> allAnswer;
         Map<String, Double> valuesWithPercentage;
         long totalMovements = getTotalMovements(values);
@@ -28,6 +28,10 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
         topNAnswer = allAnswer.subList(0, n - 1);
         sumOthers = getOthersEntry(others, sumOthers);
         topNAnswer.add(new AbstractMap.SimpleEntry<>("Otros", sumOthers));
+
+        for(Map.Entry<String, Double> f : topNAnswer) {
+            System.out.println(f.getKey() + " " + f.getValue());
+        }
 
         return topNAnswer;
     }
@@ -57,7 +61,7 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
         Map<String, Double> valuesWithPercentage = new HashMap<>();
 
         for (Map.Entry<String, Long> entry : values) {
-            valuesWithPercentage.put(entry.getKey(), (double) (100 * (entry.getValue() / totalMovements)));
+            valuesWithPercentage.put(entry.getKey(), (double) (100 *entry.getValue()) / totalMovements);
         }
 
         valuesWithPercentage.putIfAbsent("Otros", 0.0);
