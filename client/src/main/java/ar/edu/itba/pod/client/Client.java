@@ -8,6 +8,8 @@ import ar.edu.itba.pod.client.parsers.Parser;
 import ar.edu.itba.pod.client.parsers.SystemPropertiesParser;
 import ar.edu.itba.pod.client.queries.*;
 import ar.edu.itba.pod.exceptions.IllegalQueryNumber;
+import ar.edu.itba.pod.exceptions.InvalidArgumentsException;
+
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientNetworkConfig;
@@ -23,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 public class Client {
     private static Logger logger = LoggerFactory.getLogger(Client.class);
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException, IllegalQueryNumber {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, IllegalQueryNumber, InvalidArgumentsException {
         logger.info("The client is starting");
 
         SystemPropertiesParser sysinput = new SystemPropertiesParser();
@@ -47,18 +49,20 @@ public class Client {
 
         IList<Airport> airportsIList = hz.getList("airports");
         IList<Movement> movementsIList = hz.getList("movements");
-
+        logger.info("Starting file reading");
         IList<Airport> airports = loadAirportCSV(sysinput, airportsIList);
         IList<Movement> movements = loadMovementsCSV(sysinput, movementsIList);
-
+        logger.info("Ended file reading");
 
         int querynumber = sysinput.getQueryNumber();
+        
+        validateParameters(sysinput);
 
         int n;
         if (sysinput.getN().isPresent()) {
             n = Integer.parseInt(sysinput.getN().get());
         } else {
-            n = -1;
+            n = -1;         
             if (sysinput.getMin().isPresent()) {
                 n = Integer.parseInt(sysinput.getMin().get());
             }
@@ -75,8 +79,8 @@ public class Client {
 
         logger.info("Starting map/reduce job for query number " + querynumber);
         query.runQuery();
-
         logger.info("Finished map/reduce job");
+        
         airportsIList.destroy();
         movementsIList.destroy();
         movements.destroy();
@@ -84,7 +88,43 @@ public class Client {
         hz.shutdown();
     }
 
-    private static IList<Airport> loadAirportCSV(SystemPropertiesParser sysinput, IList<Airport> airportsIList) {
+    private static void validateParameters(SystemPropertiesParser sysinput) throws InvalidArgumentsException {
+		
+    	int query = sysinput.getQueryNumber();
+    	
+    	switch(query) {
+				    case 2:
+				    	if (!sysinput.getN().isPresent()) {
+				            throw new InvalidArgumentsException("Query 2 requires n as a parameter.");
+				        }
+				        break;
+				    case 4:
+				    	if (!sysinput.getN().isPresent() && !sysinput.getOaci().isPresent()) {
+				            throw new InvalidArgumentsException("Query 4 requires n and oaci as parameters.");
+				        } else if(!sysinput.getN().isPresent()) {
+				        	throw new InvalidArgumentsException("Query 4 requires n as a parameter.");
+				        } else if(!sysinput.getOaci().isPresent()) {
+				        	throw new InvalidArgumentsException("Query 4 requires oaci as a parameter.");
+				        }
+				        break;
+				    case 5:
+				    	if (!sysinput.getN().isPresent()) {
+				            throw new InvalidArgumentsException("Query 5 requires n as a parameter.");
+				        }
+				        break;
+				    case 6:
+				    	if (!sysinput.getMin().isPresent()) {
+				            throw new InvalidArgumentsException("Query 6 requires min as a parameter.");
+				        }
+				    default:
+				        break;
+    	}
+    		
+    		
+		
+	}
+
+	private static IList<Airport> loadAirportCSV(SystemPropertiesParser sysinput, IList<Airport> airportsIList) {
         Parser<Airport> ap = new AirportParser();
         return ap.loadCSVFile(Paths.get(sysinput.getInPath().concat("aeropuertos.csv")), airportsIList);
     }
