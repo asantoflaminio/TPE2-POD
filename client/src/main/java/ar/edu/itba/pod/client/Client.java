@@ -20,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutionException;
 
 public class Client {
@@ -44,14 +46,17 @@ public class Client {
             return;
         }
 
-
-        //TODO chequear errores de parametros. Ej query6 requiere min, query5 requiere n, Query4 requiere n y oaci, etc
-
         IList<Airport> airportsIList = hz.getList("airports");
         IList<Movement> movementsIList = hz.getList("movements");
+        
+        FileManager fm = new FileManager(sysinput.getOutPath() +"/query" + sysinput.getQueryNumber() + ".txt");      
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss.SSSS");
+        
         logger.info("Starting file reading");
+        fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - "+ "Starting file reading\r\n");
         IList<Airport> airports = loadAirportCSV(sysinput, airportsIList);
         IList<Movement> movements = loadMovementsCSV(sysinput, movementsIList);
+        fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - "+ "Ended file reading\r\n");
         logger.info("Ended file reading");
 
         int querynumber = sysinput.getQueryNumber();
@@ -76,11 +81,17 @@ public class Client {
         }
 
         query = getQuery(querynumber, airports, movements, hz, sysinput.getOutPath(), n, oaci);
+        
+        
+        
 
         logger.info("Starting map/reduce job for query number " + querynumber);
+        fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - "+ "Starting map/reduce job for query number\r\n");
         query.runQuery();
+        fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - "+ "Finished map/reduce job\r\n");
         logger.info("Finished map/reduce job");
         
+        fm.close();
         airportsIList.destroy();
         movementsIList.destroy();
         movements.destroy();
