@@ -5,7 +5,7 @@ import com.hazelcast.mapreduce.ReducerFactory;
 
 public class Query4ReducerFactory implements ReducerFactory<String, Integer, Integer> {
 
-	@Override
+    @Override
     public Reducer<Integer, Integer> newReducer(String s) {
         return new Query4Reducer();
     }

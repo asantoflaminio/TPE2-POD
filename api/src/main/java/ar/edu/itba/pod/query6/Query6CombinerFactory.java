@@ -1,14 +1,13 @@
 package ar.edu.itba.pod.query6;
 
+import ar.edu.itba.pod.Pair;
 import com.hazelcast.mapreduce.Combiner;
 import com.hazelcast.mapreduce.CombinerFactory;
 
-import ar.edu.itba.pod.Pair;
+public class Query6CombinerFactory implements CombinerFactory<Pair<String, String>, Integer, Integer> {
 
-public class Query6CombinerFactory implements CombinerFactory<Pair<String,String>, Integer, Integer> {
-	
-	@Override
-    public Combiner<Integer, Integer> newCombiner(Pair<String,String> pair) {
+    @Override
+    public Combiner<Integer, Integer> newCombiner(Pair<String, String> pair) {
         return new Query6Combiner();
     }
 
@@ -29,6 +28,6 @@ public class Query6CombinerFactory implements CombinerFactory<Pair<String,String
         public void reset() {
             accum = 0;
         }
-}
+    }
 
 }

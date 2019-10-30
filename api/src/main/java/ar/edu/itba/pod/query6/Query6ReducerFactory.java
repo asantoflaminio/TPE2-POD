@@ -1,19 +1,18 @@
 package ar.edu.itba.pod.query6;
 
+import ar.edu.itba.pod.Pair;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
-import ar.edu.itba.pod.Pair;
+public class Query6ReducerFactory implements ReducerFactory<Pair<String, String>, Integer, Integer> {
 
-public class Query6ReducerFactory implements ReducerFactory<Pair<String,String>, Integer, Integer>{
-	
-	@Override
-    public Reducer<Integer, Integer> newReducer(Pair<String,String> pair) {
+    @Override
+    public Reducer<Integer, Integer> newReducer(Pair<String, String> pair) {
         return new Query6Reducer();
     }
 
     private class Query6Reducer extends Reducer<Integer, Integer> {
-    	
+
         private volatile int accum;
 
         @Override
@@ -30,5 +29,5 @@ public class Query6ReducerFactory implements ReducerFactory<Pair<String,String>,
         public Integer finalizeReduce() {
             return accum;
         }
-}
+    }
 }

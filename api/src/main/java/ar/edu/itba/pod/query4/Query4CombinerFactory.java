@@ -4,8 +4,8 @@ import com.hazelcast.mapreduce.Combiner;
 import com.hazelcast.mapreduce.CombinerFactory;
 
 public class Query4CombinerFactory implements CombinerFactory<String, Integer, Integer> {
-	
-	@Override
+
+    @Override
     public Combiner<Integer, Integer> newCombiner(String s) {
         return new Query4Combiner();
     }
@@ -27,6 +27,6 @@ public class Query4CombinerFactory implements CombinerFactory<String, Integer, I
         public void reset() {
             accum = 0;
         }
-}
+    }
 
 }

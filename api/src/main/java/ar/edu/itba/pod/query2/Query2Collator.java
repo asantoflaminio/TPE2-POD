@@ -25,7 +25,7 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
         allAnswer = getOrderAnswer(valuesWithPercentage);
         List<Map.Entry<String, Double>> others = allAnswer.subList(n, allAnswer.size());
 
-        topNAnswer = allAnswer.subList(0, n-1);
+        topNAnswer = allAnswer.subList(0, n - 1);
         sumOthers = getOthersEntry(others, sumOthers);
         topNAnswer.add(new AbstractMap.SimpleEntry<>("Otros", sumOthers));
 
@@ -54,9 +54,9 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
     }
 
     private Map<String, Double> calculatePercentage(long totalMovements, Iterable<Map.Entry<String, Long>> values) {
-        Map<String, Double> valuesWithPercentage= new HashMap<>();
+        Map<String, Double> valuesWithPercentage = new HashMap<>();
 
-        for(Map.Entry<String, Long> entry : values) {
+        for (Map.Entry<String, Long> entry : values) {
             valuesWithPercentage.put(entry.getKey(), (double) (100 * (entry.getValue() / totalMovements)));
         }
 
@@ -67,7 +67,7 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
     private long getTotalMovements(Iterable<Map.Entry<String, Long>> airlineQuantity) {
         long totalMovements = 0L;
 
-        for(Map.Entry<String, Long> airline : airlineQuantity){
+        for (Map.Entry<String, Long> airline : airlineQuantity) {
             totalMovements += airline.getValue();
         }
 

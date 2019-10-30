@@ -6,13 +6,13 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class FileManager {
-	
-	BufferedWriter bw;
-	
+
+    BufferedWriter bw;
+
     public FileManager(String name) {
 
         try {
-            bw = new BufferedWriter(new FileWriter(name , true));
+            bw = new BufferedWriter(new FileWriter(name, true));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,8 +36,8 @@ public class FileManager {
         }
     }
 
-    public void log(String data){
-        appendToFile(LocalDateTime.now() +" INFO - "+data +"\n");
+    public void log(String data) {
+        appendToFile(LocalDateTime.now() + " INFO - " + data + "\n");
     }
 
     public void flush() {
@@ -47,6 +47,6 @@ public class FileManager {
             e.printStackTrace();
         }
 
-}
+    }
 
 }

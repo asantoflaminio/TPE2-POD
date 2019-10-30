@@ -14,12 +14,10 @@ import com.hazelcast.client.config.ClientNetworkConfig;
 import com.hazelcast.config.GroupConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IList;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.nio.file.Paths;
-import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class Client {
@@ -31,8 +29,6 @@ public class Client {
         SystemPropertiesParser sysinput = new SystemPropertiesParser();
         logger.info("Query number: " + sysinput.getQueryNumber());
 
-        
-        
 
         ClientConfig clientConfig = getConfig(sysinput);
 
@@ -45,36 +41,36 @@ public class Client {
             System.out.println("Unable to connect to cluster");
             return;
         }
-        
-        
+
+
         //TODO chequear errores de parametros. Ej query6 requiere min, query5 requiere n, Query4 requiere n y oaci, etc
-        
+
         IList<Airport> airportsIList = hz.getList("airports");
         IList<Movement> movementsIList = hz.getList("movements");
-        
+
         IList<Airport> airports = loadAirportCSV(sysinput, airportsIList);
         IList<Movement> movements = loadMovementsCSV(sysinput, movementsIList);
 
-        
+
         int querynumber = sysinput.getQueryNumber();
-        
+
         int n;
-        if(sysinput.getN().isPresent()) {
-        	n = Integer.parseInt(sysinput.getN().get());
+        if (sysinput.getN().isPresent()) {
+            n = Integer.parseInt(sysinput.getN().get());
         } else {
-        	n = -1;
-        	if(sysinput.getMin().isPresent()) {
-        		n = Integer.parseInt(sysinput.getMin().get());
-        	}
+            n = -1;
+            if (sysinput.getMin().isPresent()) {
+                n = Integer.parseInt(sysinput.getMin().get());
+            }
         }
-        
+
         String oaci;
-        if(sysinput.getOaci().isPresent()) {
-        	oaci = sysinput.getOaci().get();
+        if (sysinput.getOaci().isPresent()) {
+            oaci = sysinput.getOaci().get();
         } else {
-        	oaci = null;
+            oaci = null;
         }
-        
+
         query = getQuery(querynumber, airports, movements, hz, sysinput.getOutPath(), n, oaci);
 
         logger.info("Starting map/reduce job for query number " + querynumber);

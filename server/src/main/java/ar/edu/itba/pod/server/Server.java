@@ -1,7 +1,5 @@
 package ar.edu.itba.pod.server;
 
-import com.hazelcast.config.Config;
-import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import org.slf4j.Logger;

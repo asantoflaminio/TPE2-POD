@@ -1,15 +1,13 @@
 package ar.edu.itba.pod.client.parsers;
 
 import ar.edu.itba.pod.Airport;
-import ar.edu.itba.pod.Movement;
+import com.hazelcast.core.IList;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.hazelcast.core.IList;
 
 public class AirportParser implements Parser<Airport> {
 
@@ -25,7 +23,7 @@ public class AirportParser implements Parser<Airport> {
         return parseAllLines(lines, ans);
     }
 
-    private IList<Airport> parseAllLines(List<String> lines,  IList<Airport> ans) {
+    private IList<Airport> parseAllLines(List<String> lines, IList<Airport> ans) {
         List<Airport> airports = new ArrayList<>();
 
         if (lines == null) {
@@ -48,7 +46,7 @@ public class AirportParser implements Parser<Airport> {
     }
 
     private String optionalFromStr(String s) {
-        if(s.equals("")) {
+        if (s.equals("")) {
             return null;
         }
         return s;

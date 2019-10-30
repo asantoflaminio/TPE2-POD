@@ -3,6 +3,7 @@ package ar.edu.itba.pod.client.parsers;
 import ar.edu.itba.pod.FlightType;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.MovementType;
+import com.hazelcast.core.IList;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -11,16 +12,14 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hazelcast.core.IList;
-
 public class MovementParser implements Parser<Movement> {
 
     @Override
     public IList<Movement> loadCSVFile(Path path, IList<Movement> ans) {
-        List<String> lines = null; 
+        List<String> lines = null;
 
         try {
-             lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
+            lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
         } catch (IOException e) {
             System.out.println("unable to load file");
             e.printStackTrace();
@@ -30,7 +29,7 @@ public class MovementParser implements Parser<Movement> {
     }
 
     private IList<Movement> parseAllLines(List<String> lines, IList<Movement> ans) {
-        List<Movement> movements = new ArrayList<>(); 
+        List<Movement> movements = new ArrayList<>();
 
         if (lines == null) {
             return ans;
@@ -48,25 +47,25 @@ public class MovementParser implements Parser<Movement> {
 
     private Movement parseLine(String line) {
         String[] column = line.split(";");
-        return new Movement(getFlightType(column[3]), getMovementType(column[4]), column[5], column[6]);
+        return new Movement(getFlightType(column[3]), getMovementType(column[4]), column[5], column[6], column[7]);
     }
 
     private FlightType getFlightType(String s) {
-        if(s.equalsIgnoreCase("cabotaje")) {
+        if (s.equalsIgnoreCase("cabotaje")) {
             return FlightType.CABOTAGE;
         }
-        if(s.equalsIgnoreCase("internacional")) {
+        if (s.equalsIgnoreCase("internacional")) {
             return FlightType.INTERNATIONAL;
         }
         return null;
     }
 
     private MovementType getMovementType(String s) {
-        if(s.equalsIgnoreCase("despegue")) {
+        if (s.equalsIgnoreCase("despegue")) {
             return MovementType.TAKEOFF;
         }
 
-        if(s.equalsIgnoreCase("aterrizaje")) {
+        if (s.equalsIgnoreCase("aterrizaje")) {
             return MovementType.LANDING;
         }
 

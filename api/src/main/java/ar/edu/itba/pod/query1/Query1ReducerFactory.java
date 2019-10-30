@@ -4,8 +4,8 @@ import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
 public class Query1ReducerFactory implements ReducerFactory<String, Integer, Integer> {
-    
-	@Override
+
+    @Override
     public Reducer<Integer, Integer> newReducer(String s) {
         return new Query1Reducer();
     }
@@ -27,6 +27,6 @@ public class Query1ReducerFactory implements ReducerFactory<String, Integer, Int
         public Integer finalizeReduce() {
             return accum;
         }
-}
+    }
 
 }

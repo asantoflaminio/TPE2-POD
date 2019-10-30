@@ -1,10 +1,9 @@
 package ar.edu.itba.pod.query2;
 
-import ar.edu.itba.pod.query1.Query1ReducerFactory;
 import com.hazelcast.mapreduce.Reducer;
 import com.hazelcast.mapreduce.ReducerFactory;
 
-public class Query2ReducerFactory  implements ReducerFactory<String, Long, Long> {
+public class Query2ReducerFactory implements ReducerFactory<String, Long, Long> {
 
     @Override
     public Reducer<Long, Long> newReducer(String s) {

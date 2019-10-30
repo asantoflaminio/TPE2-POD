@@ -7,14 +7,17 @@ import ar.edu.itba.pod.client.queries.data.Query1Data;
 import ar.edu.itba.pod.query1.Query1CombinerFactory;
 import ar.edu.itba.pod.query1.Query1Mapper;
 import ar.edu.itba.pod.query1.Query1ReducerFactory;
-
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ICompletableFuture;
 import com.hazelcast.core.IList;
 import com.hazelcast.mapreduce.Job;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /*

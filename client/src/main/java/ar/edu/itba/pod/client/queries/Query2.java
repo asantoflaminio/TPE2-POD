@@ -3,7 +3,6 @@ package ar.edu.itba.pod.client.queries;
 import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.client.FileManager;
-
 import ar.edu.itba.pod.client.queries.data.Query2Data;
 import ar.edu.itba.pod.query2.Query2Collator;
 import ar.edu.itba.pod.query2.Query2CombinerFactory;
@@ -22,14 +21,14 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class Query2 implements Query {
-	private IList<Airport> airports;
+    private IList<Airport> airports;
     private IList<Movement> movements;
     private HazelcastInstance hz;
     private FileManager fm;
     private int n;
 
-    public Query2(IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz,  String outPath, int n) {
-    	this.airports = airports;
+    public Query2(IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath, int n) {
+        this.airports = airports;
         this.movements = movements;
         this.hz = hz;
         this.fm = new FileManager(outPath);
@@ -49,12 +48,12 @@ public class Query2 implements Query {
 
         List<Query2Data> answer = new ArrayList<>();
 
-        for(Map.Entry<String , Double> entry: cf.get()) {
+        for (Map.Entry<String, Double> entry : cf.get()) {
             answer.add(new Query2Data(entry.getKey(), entry.getValue()));
         }
 
         fm.appendToFile("Aerolínea;Porcentaje\n");
-        for(Query2Data data : answer) {
+        for (Query2Data data : answer) {
             fm.appendToFile(data + "\r\n");
         }
         fm.close();

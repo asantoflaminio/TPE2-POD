@@ -1,8 +1,8 @@
 package ar.edu.itba.pod.client.queries.data;
 
 public class Query4Data implements Comparable<Query4Data> {
-	
-	private final String oaci;
+
+    private final String oaci;
     private final int takeOffs;
 
     public Query4Data(int takeOffs, String oaci) {
@@ -15,19 +15,19 @@ public class Query4Data implements Comparable<Query4Data> {
         return oaci + ";" + takeOffs;
     }
 
-	public String getOaci() {
-		return oaci;
-	}
+    public String getOaci() {
+        return oaci;
+    }
 
-	public int getTakeOffs() {
-		return takeOffs;
-	}
+    public int getTakeOffs() {
+        return takeOffs;
+    }
 
-	@Override
-	public int compareTo(Query4Data o) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+    @Override
+    public int compareTo(Query4Data o) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
 }
 
 
