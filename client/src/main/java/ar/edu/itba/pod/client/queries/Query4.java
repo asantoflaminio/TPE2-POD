@@ -3,7 +3,9 @@ package ar.edu.itba.pod.client.queries;
 import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.client.FileManager;
+import ar.edu.itba.pod.client.queries.data.Query1Data;
 import ar.edu.itba.pod.client.queries.data.Query4Data;
+import ar.edu.itba.pod.query4.Query4Collator;
 import ar.edu.itba.pod.query4.Query4CombinerFactory;
 import ar.edu.itba.pod.query4.Query4Mapper;
 import ar.edu.itba.pod.query4.Query4ReducerFactory;
@@ -18,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 
@@ -52,27 +55,16 @@ public class Query4 implements Query {
 
         KeyValueSource<String, Movement> kvs = KeyValueSource.fromList(movements);
         Job<String, Movement> job = jobTracker.newJob(kvs);
-        ICompletableFuture<Map<String, Integer>> cf = job.mapper(new Query4Mapper(originOaci)).combiner(new Query4CombinerFactory()).reducer(new Query4ReducerFactory()).submit();
-        takeOffs = cf.get();
+        ICompletableFuture<List<Entry<String, Integer>>> cf = job.mapper(new Query4Mapper(originOaci)).combiner(new Query4CombinerFactory()).reducer(new Query4ReducerFactory()).submit(new Query4Collator(n));
+       // takeOffs = cf.get();
 
 
         /* Vuelco de resultados */
-        List<Query4Data> answer = new ArrayList<>();
-
-        for (String oaciCode : takeOffs.keySet()) {
-            answer.add(new Query4Data(takeOffs.get(oaciCode), oaciCode));
+        List<Query4Data> answer = new ArrayList<>();      
+        
+        for(Map.Entry<String, Integer> entry: cf.get()) {
+        	answer.add(new Query4Data(entry.getValue(),entry.getKey()));
         }
-
-        /*
-         * Orden descendente y luego alfabeticamente.
-         */
-        answer.sort((Query4Data a, Query4Data b) -> {
-            int takeOffsDiff = b.getTakeOffs() - a.getTakeOffs();
-            if (takeOffsDiff == 0) {
-                return a.getOaci().compareTo(b.getOaci());
-            }
-            return takeOffsDiff;
-        });
 
         /* Vuelco a archivos */
         fm.appendToFile("OACI;Despegues" + "\r\n");
