@@ -4,10 +4,21 @@ import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.client.FileManager;
 
+import ar.edu.itba.pod.client.queries.data.Query2Data;
+import ar.edu.itba.pod.query2.Query2Collator;
+import ar.edu.itba.pod.query2.Query2CombinerFactory;
+import ar.edu.itba.pod.query2.Query2Mapper;
+import ar.edu.itba.pod.query2.Query2ReducerFactory;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.ICompletableFuture;
 import com.hazelcast.core.IList;
+import com.hazelcast.mapreduce.Job;
+import com.hazelcast.mapreduce.JobTracker;
+import com.hazelcast.mapreduce.KeyValueSource;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class Query2 implements Query {
@@ -28,6 +39,26 @@ public class Query2 implements Query {
     @Override
     public void runQuery() throws InterruptedException, ExecutionException {
 
+        JobTracker jobTracker = hz.getJobTracker("Query2");
+
+        KeyValueSource<String, Movement> kvs = KeyValueSource.fromList(movements);
+        Job<String, Movement> job = jobTracker.newJob(kvs);
+
+        ICompletableFuture<List<Map.Entry<String, Double>>> cf = job.mapper(new Query2Mapper()).
+                combiner(new Query2CombinerFactory()).reducer(new Query2ReducerFactory()).submit(new Query2Collator(n));
+
+        List<Query2Data> answer = new ArrayList<>();
+
+        for(Map.Entry<String , Double> entry: cf.get()) {
+            answer.add(new Query2Data(entry.getKey(), entry.getValue()));
+        }
+
+        fm.appendToFile("Aerolínea;Porcentaje\n");
+        for(Query2Data data : answer) {
+            fm.appendToFile(data + "\r\n");
+        }
+        fm.close();
     }
+
 }
 

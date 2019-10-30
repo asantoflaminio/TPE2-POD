@@ -7,12 +7,15 @@ public class Movement implements Serializable {
     private final MovementType movementType;
     private final String sourceOACI;
     private final String destinationOACI;
+    private final String airline;
 
-    public Movement(FlightType flightType, MovementType movementType, String sourceOACI, String destinationOACI) {
+    public Movement(FlightType flightType, MovementType movementType, String sourceOACI, String destinationOACI,
+                    String airline) {
         this.flightType = flightType;
         this.movementType = movementType;
         this.sourceOACI = sourceOACI;
         this.destinationOACI = destinationOACI;
+        this.airline = airline;
     }
 
     public FlightType getFlightType() {
@@ -29,5 +32,9 @@ public class Movement implements Serializable {
 
     public String getDestinationOACI() {
         return destinationOACI;
+    }
+
+    public String getAirline() {
+        return airline;
     }
 }
