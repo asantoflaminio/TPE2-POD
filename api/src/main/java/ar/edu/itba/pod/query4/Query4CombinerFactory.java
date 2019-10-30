@@ -1,16 +1,16 @@
-package ar.edu.itba.pod.query1;
+package ar.edu.itba.pod.query4;
 
 import com.hazelcast.mapreduce.Combiner;
 import com.hazelcast.mapreduce.CombinerFactory;
 
-public class Query1CombinerFactory implements CombinerFactory<String, Integer, Integer> {
+public class Query4CombinerFactory implements CombinerFactory<String, Integer, Integer> {
 	
 	@Override
     public Combiner<Integer, Integer> newCombiner(String s) {
-        return new Query1Combiner();
+        return new Query4Combiner();
     }
 
-    private class Query1Combiner extends Combiner<Integer, Integer> {
+    private class Query4Combiner extends Combiner<Integer, Integer> {
         private int accum = 0;
 
         @Override
@@ -28,4 +28,5 @@ public class Query1CombinerFactory implements CombinerFactory<String, Integer, I
             accum = 0;
         }
 }
+
 }

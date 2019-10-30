@@ -1,4 +1,4 @@
-package ar.edu.itba.pod.client.queries;
+package ar.edu.itba.pod.client.queries.aux;
 
 public class Query1Data {
 

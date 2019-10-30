@@ -3,6 +3,7 @@ package ar.edu.itba.pod.client.queries;
 import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.client.FileManager;
+import ar.edu.itba.pod.client.queries.aux.Query1Data;
 import ar.edu.itba.pod.query1.Query1CombinerFactory;
 import ar.edu.itba.pod.query1.Query1Mapper;
 import ar.edu.itba.pod.query1.Query1ReducerFactory;
