@@ -21,7 +21,6 @@ public class MovementParser implements Parser<Movement> {
 
         try {
              lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
-             System.out.println("KEEE");
         } catch (IOException e) {
             System.out.println("unable to load file");
             e.printStackTrace();

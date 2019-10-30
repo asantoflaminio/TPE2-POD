@@ -47,47 +47,41 @@ public class Query1 implements Query {
         ICompletableFuture<Map<String, Integer>> cf = job.mapper(new Query1Mapper()).combiner(new Query1CombinerFactory()).reducer(new Query1ReducerFactory()).submit();
 
         /* Datos que obtenemos de la reduccion */
-        Map<String, Integer> movementsPerAirport = cf.get();
-        System.out.println("movementsPerAiprot keyset es : " + movementsPerAirport.size());
+        Map<String, Integer> movesMap = cf.get();
         
         List<Query1Data> answer = new ArrayList<>();
 
         Map<String, String> mapOaci = new HashMap<>();
-        System.out.println("airports " + airports.size());
         for(Airport airport : airports) {
         	mapOaci.put(airport.getOaciCode(),airport.getName());
         }
-        System.out.println("mapOaci es " + mapOaci.size());
 
         /* Generate output joining oaci with name */
-        for(String oaciCode : movementsPerAirport.keySet()) {
+        for(String oaciCode : movesMap.keySet()) {
             String name = mapOaci.get(oaciCode);
             if(name != null) {
             	//System.out.println("agrego");
-            	answer.add(new Query1Data(name, oaciCode, movementsPerAirport.get(oaciCode)));
+            	answer.add(new Query1Data(name, oaciCode, movesMap.get(oaciCode)));
             }
         }
         
-        System.out.println("antes del sort DATOS SON: " + answer.size());
 
         /* Orden descendente y alfabetico */
         answer.sort((Query1Data a, Query1Data b) -> {
             if(a.getAccum() == b.getAccum()) {
                 return a.getOaciCode().compareTo(b.getOaciCode());
             }
-            return a.getAccum() - b.getAccum();
+            return b.getAccum() - a.getAccum();
 		});
         
         
         /* Impresion a archivos */
         // header
         fm.appendToFile("OACI;Denominación;Movimientos\n");
-        // data
-        System.out.println("DATOS SON: " + answer.size());
         for(Query1Data data : answer) {
-        	System.out.println(data);
             fm.appendToFile(data +"\r\n");
         }
+        fm.close();
 
     }
 

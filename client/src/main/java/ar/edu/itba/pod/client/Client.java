@@ -55,8 +55,6 @@ public class Client {
 
         
         int querynumber = sysinput.getQueryNumber();
-        System.out.println("Ans size (airports) es " + airports.size());
-        System.out.println("Ans size (movmeents) es " + movements.size());
         query = getQuery(querynumber, airports, movements, hz, sysinput.getOutPath());
 
         logger.info("Starting map/reduce job for query number " + querynumber);

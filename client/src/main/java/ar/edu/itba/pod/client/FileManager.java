@@ -12,7 +12,7 @@ public class FileManager {
     public FileManager(String name) {
 
         try {
-            bw = new BufferedWriter(new FileWriter(name , false));
+            bw = new BufferedWriter(new FileWriter(name , true));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,7 +30,6 @@ public class FileManager {
 
     public void appendToFile(String data) {
         try {
-        	
             bw.write(data);
         } catch (IOException ioe) {
             ioe.printStackTrace();
