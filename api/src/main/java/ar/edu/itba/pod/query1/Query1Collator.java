@@ -7,8 +7,6 @@ import java.util.Map;
 
 import com.hazelcast.mapreduce.Collator;
 
-import ar.edu.itba.pod.Pair;
-
 
 public class Query1Collator implements Collator<Map.Entry<String, Integer>, List<Map.Entry<String, Integer>>>{
 	
