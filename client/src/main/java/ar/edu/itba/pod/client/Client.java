@@ -81,6 +81,10 @@ public class Client {
         query.runQuery();
 
         logger.info("Finished map/reduce job");
+        airportsIList.destroy();
+        movementsIList.destroy();
+        movements.destroy();
+        airports.destroy();
         hz.shutdown();
     }
 
