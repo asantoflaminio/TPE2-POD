@@ -25,5 +25,5 @@ public class Query6Mapper implements Mapper<String, Movement, Pair<String, Strin
         if(origin != null && destination != null && !origin.equalsIgnoreCase(destination)) {
             context.emit(new Pair<String, String>(origin, destination), 1);
         }
-}
+    }
 }
