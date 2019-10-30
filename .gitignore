@@ -96,3 +96,11 @@ fabric.properties
 */target/**
 
 # End of https://www.gitignore.io/api/intellij
+
+server/tp-server.iml
+
+tp-parent.iml
+
+api/tp-api.iml
+
+client/tp-client.iml
