@@ -97,7 +97,7 @@ public class Client {
     private static Query getQuery(int queryNumber, IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath, int n, String oaci)
             throws IllegalQueryNumber {
         Query query;
-
+        outPath = outPath + "/query" + queryNumber + ".csv";
         switch (queryNumber) {
             case 1:
                 query = new Query1(airports, movements, hz, outPath);

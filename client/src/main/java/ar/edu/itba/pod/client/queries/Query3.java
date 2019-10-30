@@ -25,6 +25,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+/*
+ * Pares de aeropuertos que registran la misma cantidad de miles de movimientos.
+ */
 public class Query3 implements Query {
 	private IList<Airport> airports;
     private IList<Movement> movements;
