@@ -23,7 +23,11 @@ public class Query6Mapper implements Mapper<String, Movement, Pair<String, Strin
         String destination = mapOaciState.get(movement.getDestinationOACI());
 
         if(origin != null && destination != null && !origin.equalsIgnoreCase(destination)) {
-            context.emit(new Pair<String, String>(origin, destination), 1);
+        	if(origin.compareTo(destination) < 0) {
+                context.emit(new Pair<String, String>(destination, origin), 1);
+            } else {
+            	context.emit(new Pair<String, String>(origin, destination), 1);
+            }        
         }
     }
 }

@@ -63,12 +63,9 @@ public class Query6 implements Query {
 
         /* Ordenamiento de datos */
         List<Query6Data> answer = new ArrayList<>();
-        System.out.println("size de pairdata " + pairData.size());
-        System.out.println("min es " + min);
         for(Pair<String, String> pair : pairData.keySet()) {
         	
             int movements = pairData.get(pair);
-            System.out.println("movements es " + movements);
             if(min <= movements) {
                 String stateA = pair.getElement0();
                 String stateB = pair.getElement1();
@@ -77,7 +74,6 @@ public class Query6 implements Query {
                     stateA = pair.getElement1();
                     stateB = pair.getElement0();
                 }
-                System.out.println("AGREGO");
                 answer.add(new Query6Data(new Pair<String,String>(stateA, stateB), movements));
             }
         }
@@ -85,9 +81,6 @@ public class Query6 implements Query {
 		Collections.sort(answer);
 
         /* Vuelco a archivos */
-        
-		System.out.println("size de answer es " + answer.size());
-
 		fm.appendToFile("Provincia A;Provincia B;Movimientos\r\n");
 
         for(Query6Data data: answer) {
