@@ -86,7 +86,7 @@ public class Client {
                 query = new Query2(airports, movements, hz);
                 break;
             case 3:
-                query = new Query3(airports, movements, hz);
+                query = new Query3(airports, movements, hz, outPath);
                 break;
             case 4:
                 query = new Query4(airports, movements, hz);
