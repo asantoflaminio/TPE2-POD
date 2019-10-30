@@ -5,6 +5,7 @@ import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.Pair;
 import ar.edu.itba.pod.client.FileManager;
 import ar.edu.itba.pod.client.queries.data.Query6Data;
+import ar.edu.itba.pod.query6.Query6Collator;
 import ar.edu.itba.pod.query6.Query6CombinerFactory;
 import ar.edu.itba.pod.query6.Query6Mapper;
 import ar.edu.itba.pod.query6.Query6ReducerFactory;
@@ -16,6 +17,7 @@ import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
 /*
@@ -48,32 +50,15 @@ public class Query6 implements Query {
             oaciStateMap.put(airport.getOaciCode(), airport.getState());
         }
 
-
-        Map<Pair<String, String>, Integer> pairData = new HashMap<>();
         KeyValueSource<String, Movement> kvs = KeyValueSource.fromList(movements);
         Job<String, Movement> job = jobTracker.newJob(kvs);
 
-        ICompletableFuture<Map<Pair<String, String>, Integer>> cf = job.mapper(new Query6Mapper(oaciStateMap)).combiner(new Query6CombinerFactory()).reducer(new Query6ReducerFactory()).submit();
-        pairData = cf.get();
+        ICompletableFuture<List<Entry<Pair<String, String>, Integer>>> cf = job.mapper(new Query6Mapper(oaciStateMap)).combiner(new Query6CombinerFactory()).reducer(new Query6ReducerFactory()).submit(new Query6Collator(min));
 
-        /* Ordenamiento de datos */
         List<Query6Data> answer = new ArrayList<>();
-        for (Pair<String, String> pair : pairData.keySet()) {
-
-            int movements = pairData.get(pair);
-            if (min <= movements) {
-                String stateA = pair.getElement0();
-                String stateB = pair.getElement1();
-
-                if (pair.getElement1().compareTo(pair.getElement0()) < 0) {
-                    stateA = pair.getElement1();
-                    stateB = pair.getElement0();
-                }
-                answer.add(new Query6Data(new Pair<String, String>(stateA, stateB), movements));
-            }
+        for(Map.Entry<Pair<String,String>, Integer> entry: cf.get()) {
+        	answer.add(new Query6Data(new Pair<String, String>(entry.getKey().getElement1(), entry.getKey().getElement0()), entry.getValue()));
         }
-
-        Collections.sort(answer);
 
         /* Vuelco a archivos */
         fm.appendToFile("Provincia A;Provincia B;Movimientos\r\n");
