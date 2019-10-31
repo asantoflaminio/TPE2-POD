@@ -16,7 +16,7 @@ public class Query2Data {
         /*
          * Formato de la consigna.
          */
-        return airline + ";" + percentage;
+        return airline + ";" + percentage + "%";
     }
 }
 

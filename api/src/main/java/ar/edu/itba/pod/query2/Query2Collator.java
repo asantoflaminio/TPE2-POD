@@ -2,11 +2,13 @@ package ar.edu.itba.pod.query2;
 
 import com.hazelcast.mapreduce.Collator;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Map.Entry<String, Double>>> {
 
     private final int n;
+    private DecimalFormat formatter = new DecimalFormat("####.##");
 
     public Query2Collator(int n) {
         this.n = n;
@@ -25,13 +27,9 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
         allAnswer = getOrderAnswer(valuesWithPercentage);
         List<Map.Entry<String, Double>> others = allAnswer.subList(n, allAnswer.size());
 
-        topNAnswer = allAnswer.subList(0, n - 1);
+        topNAnswer = allAnswer.subList(0, n);
         sumOthers = getOthersEntry(others, sumOthers);
-        topNAnswer.add(new AbstractMap.SimpleEntry<>("Otros", sumOthers));
-
-        for(Map.Entry<String, Double> f : topNAnswer) {
-            System.out.println(f.getKey() + " " + f.getValue());
-        }
+        topNAnswer.add(new AbstractMap.SimpleEntry<>("Otros", Double.parseDouble(formatter.format(sumOthers))));
 
         return topNAnswer;
     }
@@ -61,7 +59,8 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
         Map<String, Double> valuesWithPercentage = new HashMap<>();
 
         for (Map.Entry<String, Long> entry : values) {
-            valuesWithPercentage.put(entry.getKey(), (double) (100 *entry.getValue()) / totalMovements);
+            valuesWithPercentage.put(entry.getKey(), Double.valueOf(
+                    formatter.format((double) (100 *entry.getValue()) / totalMovements)));
         }
 
         valuesWithPercentage.putIfAbsent("Otros", 0.0);
