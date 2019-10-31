@@ -2,6 +2,7 @@ package ar.edu.itba.pod.query2;
 
 import com.hazelcast.mapreduce.Collator;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -12,6 +13,7 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
 
     public Query2Collator(int n) {
         this.n = n;
+        formatter.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override

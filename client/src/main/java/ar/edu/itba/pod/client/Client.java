@@ -81,9 +81,6 @@ public class Client {
         }
 
         query = getQuery(querynumber, airports, movements, hz, sysinput.getOutPath(), n, oaci);
-        
-        
-        
 
         logger.info("Starting map/reduce job for query number " + querynumber);
         fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - "+ "Starting map/reduce job for query number\r\n");

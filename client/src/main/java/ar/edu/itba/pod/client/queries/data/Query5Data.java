@@ -1,11 +1,11 @@
 package ar.edu.itba.pod.client.queries.data;
 
-public class Query2Data {
-    private final String airline;
+public class Query5Data {
+    private final String oaciCode;
     private final double percentage;
 
-    public Query2Data(String airline, double percentage) {
-        this.airline = airline;
+    public Query5Data(String oaciCode, double percentage) {
+        this.oaciCode = oaciCode;
         this.percentage = percentage;
     }
 
@@ -14,7 +14,6 @@ public class Query2Data {
         /*
          * Formato de la consigna.
          */
-        return airline + ";" + percentage + "%";
+        return oaciCode + ";" + percentage + "%";
     }
 }
-

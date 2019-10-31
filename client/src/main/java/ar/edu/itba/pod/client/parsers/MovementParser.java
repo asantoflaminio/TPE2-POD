@@ -1,5 +1,6 @@
 package ar.edu.itba.pod.client.parsers;
 
+import ar.edu.itba.pod.FlightClass;
 import ar.edu.itba.pod.FlightType;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.MovementType;
@@ -47,25 +48,33 @@ public class MovementParser implements Parser<Movement> {
 
     private Movement parseLine(String line) {
         String[] column = line.split(";");
-        return new Movement(getFlightType(column[3]), getMovementType(column[4]), column[5], column[6], column[7]);
+        return new Movement(getFlightType(column[3]), getMovementType(column[4]), getClassType(column[2]),column[5], column[6], column[7]);
+    }
+
+    private FlightClass getClassType(String s) {
+        if (s.equalsIgnoreCase("regular")) {
+            return FlightClass.REGULAR;
+        } else if (s.equalsIgnoreCase("no regular")) {
+            return FlightClass.NOTREGULAR;
+        } else {
+            return FlightClass.PRIVATE;
+        }
     }
 
     private FlightType getFlightType(String s) {
         if (s.equalsIgnoreCase("cabotaje")) {
             return FlightType.CABOTAGE;
-        }
-        if (s.equalsIgnoreCase("internacional")) {
+        } else if (s.equalsIgnoreCase("internacional")) {
             return FlightType.INTERNATIONAL;
         }
+
         return null;
     }
 
     private MovementType getMovementType(String s) {
         if (s.equalsIgnoreCase("despegue")) {
             return MovementType.TAKEOFF;
-        }
-
-        if (s.equalsIgnoreCase("aterrizaje")) {
+        } else if (s.equalsIgnoreCase("aterrizaje")) {
             return MovementType.LANDING;
         }
 
