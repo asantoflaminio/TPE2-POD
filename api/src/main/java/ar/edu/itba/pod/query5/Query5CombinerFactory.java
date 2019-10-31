@@ -1,7 +1,6 @@
 package ar.edu.itba.pod.query5;
 
 import ar.edu.itba.pod.Pair;
-import ar.edu.itba.pod.query2.Query2CombinerFactory;
 import com.hazelcast.mapreduce.Combiner;
 import com.hazelcast.mapreduce.CombinerFactory;
 

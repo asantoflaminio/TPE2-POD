@@ -11,9 +11,6 @@ public class Query5Data {
 
     @Override
     public String toString() {
-        /*
-         * Formato de la consigna.
-         */
         return oaciCode + ";" + percentage + "%";
     }
 }

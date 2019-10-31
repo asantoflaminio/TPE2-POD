@@ -1,6 +1,5 @@
 package ar.edu.itba.pod.query4;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -19,7 +18,7 @@ public class Query4Collator implements Collator<Map.Entry<String, Integer>, List
     @Override
     public List<Map.Entry<String, Integer>> collate(Iterable<Map.Entry<String, Integer>> values) {
     	
-        List<Map.Entry<String, Integer>> topNAnswer = new ArrayList<>();
+        List<Map.Entry<String, Integer>> topNAnswer;
         List<Map.Entry<String, Integer>> allAnswer = new ArrayList<>();
 
         for (Map.Entry<String, Integer> v: values) {
@@ -31,9 +30,7 @@ public class Query4Collator implements Collator<Map.Entry<String, Integer>, List
                 .reversed()
                 .thenComparing(Map.Entry::getKey));
 
-
         topNAnswer = allAnswer.subList(0, n);
-
 
         return topNAnswer;
     }

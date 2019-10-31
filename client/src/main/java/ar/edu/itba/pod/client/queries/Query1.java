@@ -31,7 +31,7 @@ public class Query1 implements Query {
     private IList<Movement> movements;
     private HazelcastInstance hz;
     private FileManager fm;
-    
+
     public Query1(IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath) {
         this.airports = airports;
         this.movements = movements;
@@ -41,31 +41,31 @@ public class Query1 implements Query {
 
     @Override
     public void runQuery() throws InterruptedException, ExecutionException {
-    	
+
         JobTracker jobTracker = hz.getJobTracker("Query1");
 
 
         KeyValueSource<String, Movement> kvs = KeyValueSource.fromList(movements);
         Job<String, Movement> job = jobTracker.newJob(kvs);
 
-        ICompletableFuture<List<Entry<String, Integer>>> cf = job.mapper(new Query1Mapper()).combiner(new Query1CombinerFactory()).reducer(new Query1ReducerFactory()).submit(new Query1Collator());    
+        ICompletableFuture<List<Entry<String, Integer>>> cf = job.mapper(new Query1Mapper()).combiner(new Query1CombinerFactory()).reducer(new Query1ReducerFactory()).submit(new Query1Collator());
         List<Query1Data> answer = new ArrayList<>();
 
         Map<String, String> mapOaci = new HashMap<>();
-        for(Airport airport : airports) {
-        	mapOaci.put(airport.getOaciCode(),airport.getName());
+        for (Airport airport : airports) {
+            mapOaci.put(airport.getOaciCode(), airport.getName());
         }
 
-        
-        for(Map.Entry<String, Integer> entry: cf.get()) {
-        	answer.add(new Query1Data(mapOaci.get(entry.getKey()), entry.getKey(), entry.getValue()));
+
+        for (Map.Entry<String, Integer> entry : cf.get()) {
+            answer.add(new Query1Data(mapOaci.get(entry.getKey()), entry.getKey(), entry.getValue()));
         }
-        
+
         /* Impresion a archivos */
         // header
         fm.appendToFile("OACI;Denominación;Movimientos\n");
-        for(Query1Data data : answer) {
-            fm.appendToFile(data +"\r\n");
+        for (Query1Data data : answer) {
+            fm.appendToFile(data + "\r\n");
         }
         fm.close();
 

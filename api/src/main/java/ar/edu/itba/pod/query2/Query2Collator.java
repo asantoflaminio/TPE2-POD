@@ -2,7 +2,6 @@ package ar.edu.itba.pod.query2;
 
 import com.hazelcast.mapreduce.Collator;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -61,7 +60,7 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
 
         for (Map.Entry<String, Long> entry : values) {
             valuesWithPercentage.put(entry.getKey(), Double.valueOf(
-                    formatter.format((double) (100 *entry.getValue()) / totalMovements)));
+                    formatter.format((double) (100 * entry.getValue()) / totalMovements)));
         }
 
         valuesWithPercentage.putIfAbsent("Otros", 0.0);

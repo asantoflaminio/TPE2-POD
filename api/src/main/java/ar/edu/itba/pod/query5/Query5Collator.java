@@ -2,7 +2,6 @@ package ar.edu.itba.pod.query5;
 
 import com.hazelcast.mapreduce.Collator;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -30,7 +29,7 @@ public class Query5Collator implements Collator<Map.Entry<String, Double>, List<
     private List<Map.Entry<String, Double>> getOrderAnswer(Iterable<Map.Entry<String, Double>> valuesWithPercentage) {
         final List<Map.Entry<String, Double>> answer = new LinkedList<>();
 
-        for(Map.Entry<String, Double> v : valuesWithPercentage) {
+        for (Map.Entry<String, Double> v : valuesWithPercentage) {
             answer.add(new AbstractMap.SimpleEntry<>(v.getKey(), Double.valueOf(formatter.format(v.getValue()))));
         }
 

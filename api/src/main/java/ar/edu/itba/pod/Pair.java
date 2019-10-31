@@ -4,16 +4,9 @@ import java.io.Serializable;
 
 public class Pair<K, V> implements Serializable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private final K element0;
     private final V element1;
-
-    public static <K, V> Pair<K, V> createPair(K element0, V element1) {
-        return new Pair<K, V>(element0, element1);
-    }
 
     public Pair(K element0, V element1) {
         this.element0 = element0;
@@ -45,17 +38,21 @@ public class Pair<K, V> implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
+
         Pair other = (Pair) obj;
+
         if (element0 == null) {
             if (other.element0 != null)
                 return false;
         } else if (!element0.equals(other.element0))
             return false;
+
         if (element1 == null) {
             if (other.element1 != null)
                 return false;
         } else if (!element1.equals(other.element1))
             return false;
+
         return true;
     }
 

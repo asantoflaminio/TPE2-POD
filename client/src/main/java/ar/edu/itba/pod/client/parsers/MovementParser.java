@@ -48,7 +48,7 @@ public class MovementParser implements Parser<Movement> {
 
     private Movement parseLine(String line) {
         String[] column = line.split(";");
-        return new Movement(getFlightType(column[3]), getMovementType(column[4]), getClassType(column[2]),column[5], column[6], column[7]);
+        return new Movement(getFlightType(column[3]), getMovementType(column[4]), getClassType(column[2]), column[5], column[6], column[7]);
     }
 
     private FlightClass getClassType(String s) {

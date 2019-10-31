@@ -1,7 +1,6 @@
 package ar.edu.itba.pod.client.queries.data;
 
 public class Query4Data implements Comparable<Query4Data> {
-
     private final String oaci;
     private final int takeOffs;
 
@@ -13,14 +12,6 @@ public class Query4Data implements Comparable<Query4Data> {
     @Override
     public String toString() {
         return oaci + ";" + takeOffs;
-    }
-
-    public String getOaci() {
-        return oaci;
-    }
-
-    public int getTakeOffs() {
-        return takeOffs;
     }
 
     @Override
