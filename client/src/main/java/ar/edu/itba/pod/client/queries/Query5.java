@@ -59,7 +59,6 @@ public class Query5 implements Query {
 
         fm.appendToFile("OACI;Porcentaje\n");
         for (Query5Data data : answer) {
-            System.out.println(data);
             fm.appendToFile(data + "\r\n");
         }
         fm.close();

@@ -13,7 +13,6 @@ public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Ma
 
     public Query2Collator(int n) {
         this.n = n;
-        formatter.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override

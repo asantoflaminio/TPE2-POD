@@ -1,6 +1,5 @@
 package ar.edu.itba.pod.query5;
 
-import ar.edu.itba.pod.Pair;
 import com.hazelcast.mapreduce.Collator;
 
 import java.math.RoundingMode;
@@ -14,20 +13,16 @@ public class Query5Collator implements Collator<Map.Entry<String, Double>, List<
 
     public Query5Collator(int n) {
         this.n = n;
-        formatter.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override
     public List<Map.Entry<String, Double>> collate(Iterable<Map.Entry<String, Double>> values) {
-        for(Map.Entry<String, Double> v : values)
-            System.out.println(v.getKey() + "  - " + v.getValue());
-
         List<Map.Entry<String, Double>> topNAnswer;
         List<Map.Entry<String, Double>> allAnswer;
 
         allAnswer = getOrderAnswer(values);
 
-        topNAnswer = allAnswer.subList(0,n);
+        topNAnswer = allAnswer.subList(0, n);
 
         return topNAnswer;
     }
@@ -36,9 +31,7 @@ public class Query5Collator implements Collator<Map.Entry<String, Double>, List<
         final List<Map.Entry<String, Double>> answer = new LinkedList<>();
 
         for(Map.Entry<String, Double> v : valuesWithPercentage) {
-            if(v.getValue() > 0.0) {
-                answer.add(new AbstractMap.SimpleEntry<>(v.getKey(), Double.valueOf(formatter.format(v.getValue()))));
-            }
+            answer.add(new AbstractMap.SimpleEntry<>(v.getKey(), Double.valueOf(formatter.format(v.getValue()))));
         }
 
         answer.sort(Comparator
