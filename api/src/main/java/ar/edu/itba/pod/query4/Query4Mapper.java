@@ -6,7 +6,6 @@ import com.hazelcast.mapreduce.Context;
 import com.hazelcast.mapreduce.Mapper;
 
 public class Query4Mapper implements Mapper<String, Movement, String, Integer> {
-
     private final String oaciCodeOrigin;
 
     public Query4Mapper(String oaciCode) {

@@ -17,7 +17,6 @@ public class Query4Collator implements Collator<Map.Entry<String, Integer>, List
     
     @Override
     public List<Map.Entry<String, Integer>> collate(Iterable<Map.Entry<String, Integer>> values) {
-    	
         List<Map.Entry<String, Integer>> topNAnswer;
         List<Map.Entry<String, Integer>> allAnswer = new ArrayList<>();
 

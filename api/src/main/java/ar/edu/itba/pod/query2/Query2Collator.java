@@ -2,16 +2,19 @@ package ar.edu.itba.pod.query2;
 
 import com.hazelcast.mapreduce.Collator;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 public class Query2Collator implements Collator<Map.Entry<String, Long>, List<Map.Entry<String, Double>>> {
-
     private final int n;
-    private DecimalFormat formatter = new DecimalFormat("####.##");
+    private DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+    private DecimalFormat formatter = new DecimalFormat("####.##", symbols);
 
     public Query2Collator(int n) {
         this.n = n;
+        formatter.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override

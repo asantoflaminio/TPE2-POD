@@ -9,7 +9,6 @@ public class Query1Mapper implements Mapper<String, Movement, String, Integer> {
 
     @Override
     public void map(String s, Movement movement, Context<String, Integer> context) {
-
         if (movement.getMovementType() == MovementType.LANDING) {
             context.emit(movement.getDestinationOACI(), 1);
         }

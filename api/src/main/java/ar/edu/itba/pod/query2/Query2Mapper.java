@@ -9,7 +9,6 @@ public class Query2Mapper implements Mapper<String, Movement, String, Integer> {
 
     @Override
     public void map(String s, Movement movement, Context<String, Integer> context) {
-
         if (movement.getFlightType() == FlightType.CABOTAGE) {
             if (movement.getAirline().equals("N/A")) {
                 context.emit("Otros", 1);

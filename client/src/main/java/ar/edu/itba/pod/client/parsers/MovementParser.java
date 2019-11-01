@@ -20,9 +20,9 @@ public class MovementParser implements Parser<Movement> {
         List<String> lines = null;
 
         try {
-            lines = Files.readAllLines(path, StandardCharsets.ISO_8859_1);
+            lines = Files.readAllLines(path);
         } catch (IOException e) {
-            System.out.println("unable to load file");
+            System.out.println("Unable to load movements");
             e.printStackTrace();
         }
 
@@ -30,25 +30,26 @@ public class MovementParser implements Parser<Movement> {
     }
 
     private IList<Movement> parseAllLines(List<String> lines, IList<Movement> ans) {
-        List<Movement> movements = new ArrayList<>();
-
         if (lines == null) {
             return ans;
         }
+
+        List<Movement> movements = new ArrayList<>();
 
         lines.remove(0);
 
         for (String line : lines) {
             movements.add(parseLine(line));
         }
-        ans.addAll(movements);
 
+        ans.addAll(movements);
         return ans;
     }
 
     private Movement parseLine(String line) {
-        String[] column = line.split(";");
-        return new Movement(getFlightType(column[3]), getMovementType(column[4]), getClassType(column[2]), column[5], column[6], column[7]);
+        String[] field = line.split(";");
+        return new Movement(getFlightType(field[3]), getMovementType(field[4]),
+                getClassType(field[2]), field[5], field[6], field[7]);
     }
 
     private FlightClass getClassType(String s) {
@@ -66,18 +67,16 @@ public class MovementParser implements Parser<Movement> {
             return FlightType.CABOTAGE;
         } else if (s.equalsIgnoreCase("internacional")) {
             return FlightType.INTERNATIONAL;
+        } else {
+            return FlightType.NA;
         }
-
-        return null;
     }
 
     private MovementType getMovementType(String s) {
         if (s.equalsIgnoreCase("despegue")) {
             return MovementType.TAKEOFF;
-        } else if (s.equalsIgnoreCase("aterrizaje")) {
+        } else {
             return MovementType.LANDING;
         }
-
-        throw new IllegalArgumentException("Illegal movement type: " + s);
     }
 }

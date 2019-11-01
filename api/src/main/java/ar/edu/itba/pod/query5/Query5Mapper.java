@@ -17,7 +17,6 @@ public class Query5Mapper implements Mapper<String, Movement, String, Integer> {
 
     @Override
     public void map(String s, Movement movement, Context<String, Integer> context) {
-
         boolean containsSource = oaciAirports.contains(movement.getSourceOACI());
         boolean containsDestination = oaciAirports.contains(movement.getDestinationOACI());
 

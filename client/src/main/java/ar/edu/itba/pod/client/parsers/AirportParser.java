@@ -24,29 +24,29 @@ public class AirportParser implements Parser<Airport> {
     }
 
     private IList<Airport> parseAllLines(List<String> lines, IList<Airport> ans) {
-        List<Airport> airports = new ArrayList<>();
-
         if (lines == null) {
             return ans;
         }
+
+        List<Airport> airports = new ArrayList<>();
 
         lines.remove(0);
 
         for (String line : lines) {
             airports.add(parseLine(line));
         }
-        ans.addAll(airports);
 
+        ans.addAll(airports);
         return ans;
     }
 
     private Airport parseLine(String line) {
-        String[] column = line.split(";");
-        return new Airport(optionalFromStr(column[1]), removeQuotes(column[4]), column[21]);
+        String[] field = line.split(";");
+        return new Airport(optionalFromStr(field[1]), removeQuotes(field[4]), field[21]);
     }
 
     private String optionalFromStr(String s) {
-        if (s.equals("")) {
+        if (s.isEmpty()) {
             return null;
         }
         return s;

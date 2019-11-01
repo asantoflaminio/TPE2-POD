@@ -26,7 +26,8 @@ import java.util.concurrent.ExecutionException;
 public class Client {
     private static Logger logger = LoggerFactory.getLogger(Client.class);
 
-    public static void main(String[] args) throws InterruptedException, ExecutionException, IllegalQueryNumber, InvalidArgumentsException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException, IllegalQueryNumber,
+            InvalidArgumentsException {
         logger.info("The client is starting");
 
         SystemPropertiesParser sysinput = new SystemPropertiesParser();
@@ -81,9 +82,11 @@ public class Client {
         query = getQuery(querynumber, airports, movements, hz, sysinput.getOutPath(), n, oaci);
 
         logger.info("Starting map/reduce job for query number " + querynumber);
-        fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - " + "Starting map/reduce job for query number\r\n");
+        fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - "
+                + "Starting map/reduce job for query number\r\n");
         query.runQuery();
-        fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - " + "Finished map/reduce job\r\n");
+        fm.appendToFile(LocalDateTime.now().format(formatter) + " INFO - "
+                + "Finished map/reduce job\r\n");
         logger.info("Finished map/reduce job");
 
         fm.close();
@@ -139,7 +142,8 @@ public class Client {
         return mp.loadCSVFile(Paths.get(sysinput.getInPath().concat("movimientos.csv")), movementsIList);
     }
 
-    private static Query getQuery(int queryNumber, IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath, int n, String oaci)
+    private static Query getQuery(int queryNumber, IList<Airport> airports, IList<Movement> movements,
+                                  HazelcastInstance hz, String outPath, int n, String oaci)
             throws IllegalQueryNumber {
         Query query;
         outPath = outPath + "/query" + queryNumber + ".csv";

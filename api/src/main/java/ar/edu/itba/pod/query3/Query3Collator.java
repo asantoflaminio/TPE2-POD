@@ -9,9 +9,6 @@ import java.util.Map;
 
 public class Query3Collator implements Collator<Map.Entry<Integer, List<String>>, List<Map.Entry<Integer, List<String>>>> {
 
-    public Query3Collator() {
-    }
-
     @Override
     public List<Map.Entry<Integer, List<String>>> collate(Iterable<Map.Entry<Integer, List<String>>> values) {
         List<Map.Entry<Integer, List<String>>> answer = new ArrayList<>();
