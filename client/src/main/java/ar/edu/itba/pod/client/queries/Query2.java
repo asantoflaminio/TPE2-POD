@@ -19,7 +19,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
-
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * Query 2 is set to answer "Top N airlines according to movement percentage of domestic flights
+ * sorted in descending order".
+ *
+ */
 public class Query2 implements Query {
     private IList<Airport> airports;
     private IList<Movement> movements;

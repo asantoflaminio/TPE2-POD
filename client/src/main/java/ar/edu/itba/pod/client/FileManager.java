@@ -4,6 +4,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * 
+ * @author Grupo 2
+ *	
+ * File management class.
+ * Allows to write data into a file (erasing previous data if it already existed).
+ */
 public class FileManager {
     BufferedWriter bw;
 

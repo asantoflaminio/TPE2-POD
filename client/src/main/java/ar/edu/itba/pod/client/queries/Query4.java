@@ -26,6 +26,13 @@ import java.util.concurrent.ExecutionException;
 /*
  * n aeropuertos destino con mayor cantidad de movimientos despegue que tienen como origen a un aeropuerto oaci
  */
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * Query 4 is set to answer "N destiny airports with most take offs that have OACI airport as origin".
+ *
+ */
 public class Query4 implements Query {
     private IList<Airport> airports;
     private IList<Movement> movements;

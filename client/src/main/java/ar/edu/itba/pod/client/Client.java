@@ -23,9 +23,28 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * 
+ * @author Grupo 2
+ * Client to solve 6 types of queries using aeropuertos.csv and movimientos.csv files. 
+ *
+ */
 public class Client {
     private static Logger logger = LoggerFactory.getLogger(Client.class);
 
+    
+    /**
+     * 
+     * @param receives several environment variables including addresses, file paths and
+     * other parameters that may vary according to the desired query number. 
+     * @throws InterruptedException
+     * @throws ExecutionException
+     * @throws IllegalQueryNumber
+     * @throws InvalidArgumentsException
+     * 
+     * Gets input and proceeds to execute the query indicated by the user. 
+     * 
+     */
     public static void main(String[] args) throws InterruptedException, ExecutionException, IllegalQueryNumber,
             InvalidArgumentsException {
         logger.info("The client is starting");
@@ -97,6 +116,15 @@ public class Client {
         hz.shutdown();
     }
 
+    /**
+     * 
+     * @param sysinput
+     * @throws InvalidArgumentsException
+     * 
+     * Validates parameters received through environment variables.
+     * More specifically, it validates if certain parameters that are required
+     * only for certain queries are present when necessary. 
+     */
     private static void validateParameters(SystemPropertiesParser sysinput) throws InvalidArgumentsException {
 
         int query = sysinput.getQueryNumber();
@@ -132,16 +160,42 @@ public class Client {
 
     }
 
+    /**
+     * 
+     * @param sysinput
+     * @param airportsIList
+     * @return IList with airports
+     */
     private static IList<Airport> loadAirportCSV(SystemPropertiesParser sysinput, IList<Airport> airportsIList) {
         Parser<Airport> ap = new AirportParser();
         return ap.loadCSVFile(Paths.get(sysinput.getInPath().concat("aeropuertos.csv")), airportsIList);
     }
 
+    /**
+     * 
+     * @param sysinput
+     * @param movementsIList
+     * @return IList with movements
+     */
     private static IList<Movement> loadMovementsCSV(SystemPropertiesParser sysinput, IList<Movement> movementsIList) {
         Parser<Movement> mp = new MovementParser();
         return mp.loadCSVFile(Paths.get(sysinput.getInPath().concat("movimientos.csv")), movementsIList);
     }
 
+    /**
+     * 
+     * @param queryNumber
+     * @param airports
+     * @param movements
+     * @param hz
+     * @param outPath
+     * @param n
+     * @param oaci
+     * @return Query
+     * @throws IllegalQueryNumber
+     * 
+     * Gets the specified query. 
+     */
     private static Query getQuery(int queryNumber, IList<Airport> airports, IList<Movement> movements,
                                   HazelcastInstance hz, String outPath, int n, String oaci)
             throws IllegalQueryNumber {
@@ -173,6 +227,13 @@ public class Client {
         return query;
     }
 
+    /**
+     * 
+     * @param sysinput
+     * @return ClientConfig
+     * 
+     * Sets configuration that matches hazelcast.xml file. 
+     */
     private static ClientConfig getConfig(SystemPropertiesParser sysinput) {
         ClientConfig clientConfig = new ClientConfig();
         ClientNetworkConfig clientNetworkConfig = new ClientNetworkConfig();

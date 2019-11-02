@@ -21,6 +21,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * Query 5 is set to answer "N airports with the lowest percentage of private flights".
+ *
+ */
 public class Query5 implements Query {
     private IList<Airport> airports;
     private IList<Movement> movements;

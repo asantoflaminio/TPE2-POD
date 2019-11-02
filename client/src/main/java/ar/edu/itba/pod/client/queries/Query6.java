@@ -23,8 +23,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
-/*
- * Pares de provincias que comparten al menos min movimientos.
+
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * Query 6 is set to answer "State pairs that share at least min movements".
+ *
  */
 public class Query6 implements Query {
     private IList<Airport> airports;

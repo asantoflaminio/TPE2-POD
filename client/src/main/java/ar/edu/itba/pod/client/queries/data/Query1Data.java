@@ -1,5 +1,13 @@
 package ar.edu.itba.pod.client.queries.data;
 
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * QueryXData classes are designed to represent a row
+ * that will be printed to the CSV file answering the query X. 
+ *
+ */
 public class Query1Data {
     private final String oaciCode;
     private final String airport;

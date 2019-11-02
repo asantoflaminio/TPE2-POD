@@ -22,10 +22,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
 
-/*
- * Query 1: Movimientos por aeropuerto.
- */
 
+
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * Query 1 is set to answer "Movements per airport".
+ *
+ */
 public class Query1 implements Query {
     private IList<Airport> airports;
     private IList<Movement> movements;
@@ -61,7 +66,7 @@ public class Query1 implements Query {
             answer.add(new Query1Data(mapOaci.get(entry.getKey()), entry.getKey(), entry.getValue()));
         }
 
-        /* Impresion a archivos */
+        /* Print to file */
         // header
         fm.appendToFile("OACI;Denominación;Movimientos\n");
         for (Query1Data data : answer) {

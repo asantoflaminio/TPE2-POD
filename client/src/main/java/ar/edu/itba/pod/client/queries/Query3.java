@@ -22,8 +22,13 @@ import com.hazelcast.mapreduce.KeyValueSource;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
-/*
- * Pares de aeropuertos que registran la misma cantidad de miles de movimientos.
+
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * Query 3 is set to answer "Airport pairs that have the same amount of flights in thousands".
+ *
  */
 public class Query3 implements Query {
     private IList<Airport> airports;

@@ -2,6 +2,13 @@ package ar.edu.itba.pod.client.parsers;
 
 import java.util.Optional;
 
+/**
+ * 
+ * @author Grupo 2
+ * System properties parser in order to parse environment variables
+ * required by the queries. 
+ *
+ */
 public class SystemPropertiesParser {
     private String addresses;
     private String outPath;
