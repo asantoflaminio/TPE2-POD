@@ -2,6 +2,13 @@ package ar.edu.itba.pod;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * Airport class with OACI, airport name and location state. 
+ *
+ */
 public class Airport implements Serializable {
     private final String oaciCode;
     private final String name;

@@ -2,6 +2,15 @@ package ar.edu.itba.pod;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Grupo 2
+ *
+ * @param <K>
+ * @param <V>
+ * 
+ * Pair is an auxiliary class to be used in certain queries. 
+ */
 public class Pair<K, V> implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -2,6 +2,13 @@ package ar.edu.itba.pod;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * @author Grupo 2
+ * 
+ * Movement class with flightType, movemenType, flightClass, OACI (for source and destination) and airline. 
+ *
+ */
 public class Movement implements Serializable {
     private final FlightType flightType;
     private final MovementType movementType;
