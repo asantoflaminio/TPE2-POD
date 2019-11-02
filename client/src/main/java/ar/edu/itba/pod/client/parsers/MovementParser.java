@@ -76,16 +76,20 @@ public class MovementParser implements Parser<Movement> {
             return FlightType.CABOTAGE;
         } else if (s.equalsIgnoreCase("internacional")) {
             return FlightType.INTERNATIONAL;
-        } else {
+        } else if (s.equalsIgnoreCase("n/a")) {
             return FlightType.NA;
         }
+
+        return null;
     }
 
     private MovementType getMovementType(String s) {
         if (s.equalsIgnoreCase("despegue")) {
             return MovementType.TAKEOFF;
-        } else {
+        } else if (s.equalsIgnoreCase("aterrizaje")) {
             return MovementType.LANDING;
         }
+
+        return null;
     }
 }
