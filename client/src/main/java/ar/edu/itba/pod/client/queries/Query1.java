@@ -17,6 +17,7 @@ import com.hazelcast.mapreduce.KeyValueSource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -50,8 +51,14 @@ public class Query1 implements Query {
 
         KeyValueSource<String, Movement> kvs = KeyValueSource.fromList(movements);
         Job<String, Movement> job = jobTracker.newJob(kvs);
+        
+        List<String> oaciAirports = new LinkedList<>();
 
-        ICompletableFuture<List<Entry<String, Integer>>> cf = job.mapper(new Query1Mapper()).combiner(new Query1CombinerFactory()).reducer(new Query1ReducerFactory()).submit(new Query1Collator());
+        for (Airport airport : airports) {
+            oaciAirports.add(airport.getOaciCode());
+        }
+
+        ICompletableFuture<List<Entry<String, Integer>>> cf = job.mapper(new Query1Mapper(oaciAirports)).combiner(new Query1CombinerFactory()).reducer(new Query1ReducerFactory()).submit(new Query1Collator());
         List<Query1Data> answer = new ArrayList<>();
 
         Map<String, String> mapOaci = new HashMap<>();

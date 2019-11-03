@@ -1,5 +1,6 @@
 package ar.edu.itba.pod.client.queries;
 
+import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.Pair;
 import ar.edu.itba.pod.client.FileManager;
@@ -19,6 +20,7 @@ import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -33,8 +35,10 @@ public class Query3 implements Query {
     private IList<Movement> movements;
     private HazelcastInstance hz;
     private FileManager fm;
+    private IList<Airport> airports;
 
-    public Query3(IList<Movement> movements, HazelcastInstance hz, String outPath) {
+    public Query3(IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath) {
+    	this.airports = airports;
         this.movements = movements;
         this.hz = hz;
         this.fm = new FileManager(outPath);
@@ -51,8 +55,15 @@ public class Query3 implements Query {
          */
         KeyValueSource<String, Movement> kvs = KeyValueSource.fromList(movements);
         Job<String, Movement> job = jobTracker.newJob(kvs);
+        
+        List<String> oaciAirports = new LinkedList<>();
+
+        for (Airport airport : airports) {
+            oaciAirports.add(airport.getOaciCode());
+        }
+        
         ICompletableFuture<Map<String, Integer>> cf =
-                job.mapper(new Query1Mapper()).combiner(new Query1CombinerFactory()).reducer(new Query1ReducerFactory()).submit();
+                job.mapper(new Query1Mapper(oaciAirports)).combiner(new Query1CombinerFactory()).reducer(new Query1ReducerFactory()).submit();
         movesMap = cf.get();
 
 
