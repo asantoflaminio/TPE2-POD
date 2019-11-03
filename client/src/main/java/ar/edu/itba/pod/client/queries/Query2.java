@@ -15,8 +15,12 @@ import com.hazelcast.mapreduce.Job;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 /**
@@ -32,12 +36,15 @@ public class Query2 implements Query {
     private HazelcastInstance hz;
     private FileManager fm;
     private int n;
+    private DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+    private DecimalFormat formatter = new DecimalFormat("####.##", symbols);
 
     public Query2(IList<Movement> movements, HazelcastInstance hz, String outPath, int n) {
         this.movements = movements;
         this.hz = hz;
         this.fm = new FileManager(outPath);
         this.n = n;
+        formatter.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override
@@ -53,7 +60,7 @@ public class Query2 implements Query {
         List<Query2Data> answer = new ArrayList<>();
 
         for (Map.Entry<String, Double> entry : cf.get()) {
-            answer.add(new Query2Data(entry.getKey(), entry.getValue()));
+            answer.add(new Query2Data(entry.getKey(), Double.valueOf(formatter.format(entry.getValue()))));
         }
 
         fm.appendToFile("Aerolínea;Porcentaje\n");

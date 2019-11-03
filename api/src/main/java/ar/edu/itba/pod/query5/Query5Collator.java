@@ -9,12 +9,9 @@ import java.util.*;
 
 public class Query5Collator implements Collator<Map.Entry<String, Double>, List<Map.Entry<String, Double>>> {
     private final int n;
-    private DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
-    private DecimalFormat formatter = new DecimalFormat("####.##", symbols);
 
     public Query5Collator(int n) {
         this.n = n;
-        formatter.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override
@@ -33,7 +30,7 @@ public class Query5Collator implements Collator<Map.Entry<String, Double>, List<
         final List<Map.Entry<String, Double>> answer = new LinkedList<>();
 
         for (Map.Entry<String, Double> v : valuesWithPercentage) {
-            answer.add(new AbstractMap.SimpleEntry<>(v.getKey(), Double.valueOf(formatter.format(v.getValue()))));
+            answer.add(new AbstractMap.SimpleEntry<>(v.getKey(), v.getValue()));
         }
 
         answer.sort(Comparator

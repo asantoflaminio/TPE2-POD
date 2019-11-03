@@ -15,10 +15,10 @@ import com.hazelcast.mapreduce.Job;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -32,6 +32,8 @@ public class Query5 implements Query {
     private HazelcastInstance hz;
     private FileManager fm;
     private int n;
+    private DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+    private DecimalFormat formatter = new DecimalFormat("####.##", symbols);
 
     public Query5(IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath, int n) {
         this.airports = airports;
@@ -39,6 +41,7 @@ public class Query5 implements Query {
         this.hz = hz;
         this.fm = new FileManager(outPath);
         this.n = n;
+        formatter.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override
@@ -61,7 +64,7 @@ public class Query5 implements Query {
         List<Query5Data> answer = new ArrayList<>();
 
         for (Map.Entry<String, Double> entry : cf.get()) {
-            answer.add(new Query5Data(entry.getKey(), entry.getValue()));
+            answer.add(new Query5Data(entry.getKey(), Double.valueOf(formatter.format(entry.getValue()))));
         }
 
         fm.appendToFile("OACI;Porcentaje\n");
