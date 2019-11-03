@@ -4,8 +4,8 @@
                                http://www.hazelcast.com/schema/client-config/hazelcast-client-config-3.9.xsd"
                   xmlns="http://www.hazelcast.com/schema/client-config">
     <group>
-        <name>56086</name>
-        <password>56086</password>
+        <name>g2</name>
+        <password>g2</password>
     </group>
     <network>
         <cluster-members>
