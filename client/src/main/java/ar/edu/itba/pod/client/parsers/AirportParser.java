@@ -41,16 +41,12 @@ public class AirportParser implements Parser<Airport> {
         lines.remove(0);
 
         for (String line : lines) {
-            airports.add(parseLine(line));
+            String[] field = line.split(";");
+            airports.add(new Airport(optionalFromStr(field[1]), removeQuotes(field[4]), field[21]));
         }
 
         ans.addAll(airports);
         return ans;
-    }
-
-    private Airport parseLine(String line) {
-        String[] field = line.split(";");
-        return new Airport(optionalFromStr(field[1]), removeQuotes(field[4]), field[21]);
     }
 
     private String optionalFromStr(String s) {

@@ -48,18 +48,15 @@ public class MovementParser implements Parser<Movement> {
         lines.remove(0);
 
         for (String line : lines) {
-            movements.add(parseLine(line));
+            String[] field = line.split(";");
+            movements.add(new Movement(getFlightType(field[3]), getMovementType(field[4]),
+                    getClassType(field[2]), field[5], field[6], field[7]));
         }
 
         ans.addAll(movements);
         return ans;
     }
 
-    private Movement parseLine(String line) {
-        String[] field = line.split(";");
-        return new Movement(getFlightType(field[3]), getMovementType(field[4]),
-                getClassType(field[2]), field[5], field[6], field[7]);
-    }
 
     private FlightClass getClassType(String s) {
         if (s.equalsIgnoreCase("regular")) {
