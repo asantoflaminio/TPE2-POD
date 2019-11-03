@@ -7,7 +7,6 @@ import ar.edu.itba.pod.MovementType;
 import com.hazelcast.core.IList;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -15,12 +14,10 @@ import java.util.List;
 
 
 /**
- * 
  * @author Grupo 2
- * 
+ * <p>
  * CSV file parser for movimientos.csv.
- * Parser is designed according to the way data is stored in the mentioned file. 
- *
+ * Parser is designed according to the way data is stored in the mentioned file.
  */
 public class MovementParser implements Parser<Movement> {
 

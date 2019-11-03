@@ -10,7 +10,7 @@ public class Query3Collator implements Collator<Map.Entry<Integer, List<String>>
 
     @Override
     public List<Map.Entry<Integer, Pair<String, String>>> collate(Iterable<Map.Entry<Integer, List<String>>> values) {
-        List<Map.Entry<Integer, Pair<String,String>>> answer;
+        List<Map.Entry<Integer, Pair<String, String>>> answer;
 
         answer = generatePairs(values);
 

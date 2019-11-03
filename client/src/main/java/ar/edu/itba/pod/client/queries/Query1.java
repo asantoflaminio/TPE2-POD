@@ -46,9 +46,7 @@ public class Query1 implements Query {
 
     @Override
     public void runQuery() throws InterruptedException, ExecutionException {
-
         JobTracker jobTracker = hz.getJobTracker("Query1");
-
 
         KeyValueSource<String, Movement> kvs = KeyValueSource.fromList(movements);
         Job<String, Movement> job = jobTracker.newJob(kvs);

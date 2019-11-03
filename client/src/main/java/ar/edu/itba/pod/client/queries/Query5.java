@@ -22,11 +22,9 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 /**
- * 
  * @author Grupo 2
- * 
+ * <p>
  * Query 5 is set to answer "N airports with the lowest percentage of private flights".
- *
  */
 public class Query5 implements Query {
     private IList<Airport> airports;
@@ -45,7 +43,6 @@ public class Query5 implements Query {
 
     @Override
     public void runQuery() throws InterruptedException, ExecutionException {
-
         JobTracker jobTracker = hz.getJobTracker("Query5");
 
         List<String> oaciAirports = new LinkedList<>();

@@ -28,14 +28,12 @@ import java.util.concurrent.ExecutionException;
  *
  */
 public class Query2 implements Query {
-    private IList<Airport> airports;
     private IList<Movement> movements;
     private HazelcastInstance hz;
     private FileManager fm;
     private int n;
 
-    public Query2(IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath, int n) {
-        this.airports = airports;
+    public Query2(IList<Movement> movements, HazelcastInstance hz, String outPath, int n) {
         this.movements = movements;
         this.hz = hz;
         this.fm = new FileManager(outPath);

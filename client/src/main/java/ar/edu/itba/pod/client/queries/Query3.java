@@ -1,6 +1,5 @@
 package ar.edu.itba.pod.client.queries;
 
-import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.Pair;
 import ar.edu.itba.pod.client.FileManager;
@@ -19,25 +18,23 @@ import com.hazelcast.mapreduce.Job;
 import com.hazelcast.mapreduce.JobTracker;
 import com.hazelcast.mapreduce.KeyValueSource;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 
 /**
- * 
  * @author Grupo 2
- * 
+ * <p>
  * Query 3 is set to answer "Airport pairs that have the same amount of flights in thousands".
- *
  */
 public class Query3 implements Query {
-    private IList<Airport> airports;
     private IList<Movement> movements;
     private HazelcastInstance hz;
     private FileManager fm;
 
-    public Query3(IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath) {
-        this.airports = airports;
+    public Query3(IList<Movement> movements, HazelcastInstance hz, String outPath) {
         this.movements = movements;
         this.hz = hz;
         this.fm = new FileManager(outPath);
@@ -45,11 +42,9 @@ public class Query3 implements Query {
 
     @Override
     public void runQuery() throws InterruptedException, ExecutionException {
-
-
         JobTracker jobTracker = hz.getJobTracker("Query3");
 
-        Map<String, Integer> movesMap = new HashMap<>();
+        Map<String, Integer> movesMap;
 
         /*
          * Idem que para Query 1. Necesitamos esos mismos datos.
@@ -61,21 +56,18 @@ public class Query3 implements Query {
         movesMap = cf.get();
 
 
-        // La key van a ser el grupo de ese "mil", junto con la lista de OACI que corresponden a ese grupo
-        Map<Integer, List<String>> movementsInThousands = new HashMap<>();
-
         IMap<String, Integer> IMapOaci = hz.getMap("movesOaci");
         IMapOaci.putAll(movesMap);
 
 
         KeyValueSource<String, Integer> kvs2 = KeyValueSource.fromMap(IMapOaci);
         Job<String, Integer> job2 = jobTracker.newJob(kvs2);
-        ICompletableFuture<List<Map.Entry<Integer, Pair<String,String>>>> cf2 =
+        ICompletableFuture<List<Map.Entry<Integer, Pair<String, String>>>> cf2 =
                 job2.mapper(new Query3Mapper()).reducer(new Query3ReducerFactory()).submit(new Query3Collator());
 
         List<Query3Data> answer = new ArrayList<>();
 
-        for(Map.Entry<Integer, Pair<String, String>> v : cf2.get()) {
+        for (Map.Entry<Integer, Pair<String, String>> v : cf2.get()) {
             answer.add(new Query3Data(v.getKey(), v.getValue().getElement0(), v.getValue().getElement1()));
         }
 

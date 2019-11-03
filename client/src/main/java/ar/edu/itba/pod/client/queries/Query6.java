@@ -25,11 +25,9 @@ import java.util.concurrent.ExecutionException;
 
 
 /**
- * 
  * @author Grupo 2
- * 
+ * <p>
  * Query 6 is set to answer "State pairs that share at least min movements".
- *
  */
 public class Query6 implements Query {
     private IList<Airport> airports;
@@ -48,8 +46,6 @@ public class Query6 implements Query {
 
     @Override
     public void runQuery() throws InterruptedException, ExecutionException {
-
-
         JobTracker jobTracker = hz.getJobTracker("Query6");
 
         Map<String, String> oaciStateMap = new HashMap<>();
@@ -64,8 +60,8 @@ public class Query6 implements Query {
         ICompletableFuture<List<Entry<Pair<String, String>, Integer>>> cf = job.mapper(new Query6Mapper(oaciStateMap)).combiner(new Query6CombinerFactory()).reducer(new Query6ReducerFactory()).submit(new Query6Collator(min));
 
         List<Query6Data> answer = new ArrayList<>();
-        for(Map.Entry<Pair<String,String>, Integer> entry: cf.get()) {
-        	answer.add(new Query6Data(new Pair<String, String>(entry.getKey().getElement1(), entry.getKey().getElement0()), entry.getValue()));
+        for (Map.Entry<Pair<String, String>, Integer> entry : cf.get()) {
+            answer.add(new Query6Data(new Pair<String, String>(entry.getKey().getElement1(), entry.getKey().getElement0()), entry.getValue()));
         }
 
         /* Vuelco a archivos */

@@ -10,12 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
  * @author Grupo 2
- * 
+ * <p>
  * CSV file parser for aeropuertos.csv.
- * Parser is designed according to the way data is stored in the mentioned file. 
- *
+ * Parser is designed according to the way data is stored in the mentioned file.
  */
 public class AirportParser implements Parser<Airport> {
 

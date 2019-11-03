@@ -5,9 +5,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * 
  * @author Grupo 2
- *	
+ * <p>
  * File management class.
  * Allows to write data into a file (erasing previous data if it already existed).
  */

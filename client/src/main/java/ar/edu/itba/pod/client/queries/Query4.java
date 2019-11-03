@@ -1,6 +1,5 @@
 package ar.edu.itba.pod.client.queries;
 
-import ar.edu.itba.pod.Airport;
 import ar.edu.itba.pod.Movement;
 import ar.edu.itba.pod.client.FileManager;
 import ar.edu.itba.pod.client.queries.data.Query4Data;
@@ -26,23 +25,20 @@ import java.util.concurrent.ExecutionException;
 /*
  * n aeropuertos destino con mayor cantidad de movimientos despegue que tienen como origen a un aeropuerto oaci
  */
+
 /**
- * 
  * @author Grupo 2
- * 
+ * <p>
  * Query 4 is set to answer "N destiny airports with most take offs that have OACI airport as origin".
- *
  */
 public class Query4 implements Query {
-    private IList<Airport> airports;
     private IList<Movement> movements;
     private HazelcastInstance hz;
     private FileManager fm;
     private int n;
     private String originOaci;
 
-    public Query4(IList<Airport> airports, IList<Movement> movements, HazelcastInstance hz, String outPath, int n, String origin) {
-        this.airports = airports;
+    public Query4(IList<Movement> movements, HazelcastInstance hz, String outPath, int n, String origin) {
         this.movements = movements;
         this.hz = hz;
         this.fm = new FileManager(outPath);
@@ -52,8 +48,6 @@ public class Query4 implements Query {
 
     @Override
     public void runQuery() throws InterruptedException, ExecutionException {
-
-
         JobTracker jobTracker = hz.getJobTracker("Query4");
         // oaci destino con su respectiva cantidad de despegues
         Map<String, Integer> takeOffs = new HashMap<>();
@@ -62,7 +56,6 @@ public class Query4 implements Query {
         KeyValueSource<String, Movement> kvs = KeyValueSource.fromList(movements);
         Job<String, Movement> job = jobTracker.newJob(kvs);
         ICompletableFuture<List<Entry<String, Integer>>> cf = job.mapper(new Query4Mapper(originOaci)).combiner(new Query4CombinerFactory()).reducer(new Query4ReducerFactory()).submit(new Query4Collator(n));
-        // takeOffs = cf.get();
 
 
         /* Vuelco de resultados */

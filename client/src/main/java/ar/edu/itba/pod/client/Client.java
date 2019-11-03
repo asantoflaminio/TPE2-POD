@@ -24,26 +24,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ExecutionException;
 
 /**
- * 
  * @author Grupo 2
- * Client to solve 6 types of queries using aeropuertos.csv and movimientos.csv files. 
- *
+ * Client to solve 6 types of queries using aeropuertos.csv and movimientos.csv files.
  */
 public class Client {
     private static Logger logger = LoggerFactory.getLogger(Client.class);
 
-    
+
     /**
-     * 
-     * @param receives several environment variables including addresses, file paths and
-     * other parameters that may vary according to the desired query number. 
+     * @param args receives several environment variables including addresses, file paths and
+     *                 other parameters that may vary according to the desired query number.
      * @throws InterruptedException
      * @throws ExecutionException
      * @throws IllegalQueryNumber
-     * @throws InvalidArgumentsException
-     * 
-     * Gets input and proceeds to execute the query indicated by the user. 
-     * 
+     * @throws InvalidArgumentsException Gets input and proceeds to execute the query indicated by the user.
      */
     public static void main(String[] args) throws InterruptedException, ExecutionException, IllegalQueryNumber,
             InvalidArgumentsException {
@@ -117,18 +111,15 @@ public class Client {
     }
 
     /**
-     * 
      * @param sysinput
-     * @throws InvalidArgumentsException
-     * 
-     * Validates parameters received through environment variables.
-     * More specifically, it validates if certain parameters that are required
-     * only for certain queries are present when necessary. 
+     * @throws InvalidArgumentsException Validates parameters received through environment variables.
+     *                                   More specifically, it validates if certain parameters that are required
+     *                                   only for certain queries are present when necessary.
      */
     private static void validateParameters(SystemPropertiesParser sysinput) throws InvalidArgumentsException {
 
         int query = sysinput.getQueryNumber();
-    	
+
         switch (query) {
             case 2:
                 if (!sysinput.getN().isPresent()) {
@@ -161,7 +152,6 @@ public class Client {
     }
 
     /**
-     * 
      * @param sysinput
      * @param airportsIList
      * @return IList with airports
@@ -172,7 +162,6 @@ public class Client {
     }
 
     /**
-     * 
      * @param sysinput
      * @param movementsIList
      * @return IList with movements
@@ -183,7 +172,6 @@ public class Client {
     }
 
     /**
-     * 
      * @param queryNumber
      * @param airports
      * @param movements
@@ -192,9 +180,7 @@ public class Client {
      * @param n
      * @param oaci
      * @return Query
-     * @throws IllegalQueryNumber
-     * 
-     * Gets the specified query. 
+     * @throws IllegalQueryNumber Gets the specified query.
      */
     private static Query getQuery(int queryNumber, IList<Airport> airports, IList<Movement> movements,
                                   HazelcastInstance hz, String outPath, int n, String oaci)
@@ -206,13 +192,13 @@ public class Client {
                 query = new Query1(airports, movements, hz, outPath);
                 break;
             case 2:
-                query = new Query2(airports, movements, hz, outPath, n);
+                query = new Query2(movements, hz, outPath, n);
                 break;
             case 3:
-                query = new Query3(airports, movements, hz, outPath);
+                query = new Query3(movements, hz, outPath);
                 break;
             case 4:
-                query = new Query4(airports, movements, hz, outPath, n, oaci);
+                query = new Query4(movements, hz, outPath, n, oaci);
                 break;
             case 5:
                 query = new Query5(airports, movements, hz, outPath, n);
@@ -228,17 +214,16 @@ public class Client {
     }
 
     /**
-     * 
      * @param sysinput
      * @return ClientConfig
-     * 
-     * Sets configuration that matches hazelcast.xml file. 
+     * <p>
+     * Sets configuration that matches hazelcast.xml file.
      */
     private static ClientConfig getConfig(SystemPropertiesParser sysinput) {
         ClientConfig clientConfig = new ClientConfig();
         ClientNetworkConfig clientNetworkConfig = new ClientNetworkConfig();
 
-        clientNetworkConfig.addAddress(sysinput.getAddresses().split(";")); // ni idea si esto nada
+        clientNetworkConfig.addAddress(sysinput.getAddresses().split(";"));
         clientConfig.setNetworkConfig(clientNetworkConfig);
 
         clientConfig.setGroupConfig(new GroupConfig("g2", "g2"));

@@ -1,12 +1,10 @@
 package ar.edu.itba.pod.client.queries.data;
 
 /**
- * 
  * @author Grupo 2
- * 
+ * <p>
  * QueryXData classes are designed to represent a row
- * that will be printed to the CSV file answering the query X. 
- *
+ * that will be printed to the CSV file answering the query X.
  */
 public class Query3Data implements Comparable<Query3Data> {
     private final int group;
