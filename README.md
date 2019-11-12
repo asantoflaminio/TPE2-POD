@@ -16,19 +16,19 @@ Instrucciones
 	./query1.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida'
 
 -- Query 2:
-	./query1.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' -Dn=N
+	./query2.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' -Dn=N
 
 -- Query 3:
-	./query1.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' 
+	./query3.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' 
 
 -- Query 4:
-	./query1.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' -Dn=N -Doaci=CODE
+	./query4.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' -Dn=N -Doaci=CODE
 
 -- Query 5:
-	./query1.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' -Dn=N
+	./query5.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' -Dn=N
 
 -- Query 6:
-	./query1.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' -Dmin=MIN
+	./query6.sh -Daddresses='xx.x.x.x:xxxx' -DinPath='directorio_entrada' -DoutPath='directorio_salida' -Dmin=MIN
 
 
 Aclaraciones:
